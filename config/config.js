@@ -77,84 +77,91 @@ export default defineConfig({
       hideInMenu: true,
     },
 
-    // event
+    // student
+    // {
+    //   path: '/student/new',
+    //   component: './student/entry',
+    // },
     {
-      name: 'Event',
-      icon: 'reconciliation',
-      path: '/event/list',
-      component: './event/list',
-      hideInMenu: false,
-      access: 'canAdmin',
+      path: '/student/edit/:id',
+      component: './student/update',
     },
-
     {
-      name: 'New',
-      icon: 'smile',
-      path: '/event/new',
+      path: '/student/list',
+      icon: 'user',
+      name: 'Student',
+      component: './student/list',
       hideInMenu: true,
-      component: './event/entry',
-      access: 'canAdmin',
     },
     {
       name: 'Detail',
       icon: 'smile',
-      path: '/event/:id',
-      component: './event/detail',
+      path: '/student/detail/:id',
+      component: './student/detail',
       hideInMenu: true,
-    },
-    {
-      name: 'Event Update',
-      icon: 'smile',
-      path: '/event/edit/:id',
-      component: './event/update',
-      hideInMenu: true,
-      access: 'canAdmin',
     },
 
-    // Todo:Event list for agency
+    // class
 
     {
-      name: 'Guest New',
-      icon: 'smile',
-      path: '/event/:id/guest/new/',
-      component: './event/update',
-      hideInMenu: true,
-      access: 'canAdmin',
+      path: '/class/list',
+      icon: 'reconciliation',
+      name: 'Classes',
+      component: './class/list',
+      hideInMenu: false,
     },
     {
-      name: 'Guest',
-      icon: 'smile',
-      path: '/event/:id/guest/list',
-      component: './event/guest/list',
+      path: '/class/new',
+      icon: 'reconciliation',
+      name: 'Classes',
+      component: './class/entry',
       hideInMenu: true,
     },
     {
-      name: 'Guest Detail',
+      name: 'Detail',
       icon: 'smile',
-      path: '/event/:id/guest/edit/:guestId',
-      component: './event/guest/update',
+      path: '/class/detail/:id',
+      component: './class/detail',
       hideInMenu: true,
-      access: 'canAdmin',
     },
 
+    {
+      path: '/class/edit/:id',
+      component: './class/update',
+    },
+
+    // redirect to /class/list
     {
       path: '/dashboard',
       name: 'dashboard',
       component: './dashboard/analysis',
-      redirect: '/event/list',
+      redirect: '/class/list',
       hideInMenu: true,
       icon: 'dashboard',
-      access: 'canAdmin',
     },
+
+    // shift
+
+    // {
+    //   path: '/shift/list',
+    //   component: './shift/list',
+    //   hideInMenu: true,
+    // },
+    // {
+    //   path: '/shift/new',
+    //   component: './shift/entry',
+    //   hideInMenu: true,
+    // },
     {
-      path: '/',
-      name: 'dashboard',
-      component: './dashboard/analysis',
-      redirect: '/event/list',
+      path: '/shift/detail/:id',
+      component: './shift/detail',
       hideInMenu: true,
-      icon: 'dashboard',
-      access: 'canAdmin',
     },
+    // {
+    //   path: '/shift/edit/:id',
+    //   component: './shift/update',
+    //   hideInMenu: true,
+    // },
 
     // team
 
@@ -170,77 +177,79 @@ export default defineConfig({
     },
     {
       path: '/team/list',
-      icon: 'reconciliation',
+      icon: 'user',
       name: 'Team',
       component: './team/list',
       access: 'canAdmin',
     },
 
-    //Agency
+    // //Agency
 
-    {
-      path: '/agency/new',
-      component: './agency/entry',
-      access: 'canAdmin',
-    },
-    {
-      path: '/agency/edit/:id',
-      component: './agency/update',
-      access: 'canAdmin',
-    },
-    {
-      path: '/agency/list',
-      icon: 'reconciliation',
-      name: 'Agency',
-      component: './agency/list',
-      access: 'canAdmin',
-    },
-    //FAQ
+    // {
+    //   path: '/agency/new',
+    //   component: './agency/entry',
+    //   access: 'canAdmin',
+    // },
+    // {
+    //   path: '/agency/edit/:id',
+    //   component: './agency/update',
+    //   access: 'canAdmin',
+    // },
+    // {
+    //   path: '/agency/list',
+    //   icon: 'reconciliation',
+    //   name: 'Agency',
+    //   component: './agency/list',
+    //   access: 'canAdmin',
+    // },
+    // //FAQ
 
-    {
-      path: '/faq/new',
-      component: './faq/entry',
-      access: 'canAdmin',
-    },
-    {
-      path: '/faq/edit/:id',
-      component: './faq/update',
-      access: 'canAdmin',
-    },
-    {
-      path: '/faq/list',
-      icon: 'reconciliation',
-      name: 'FAQ',
-      component: './faq/list',
-      access: 'canAdmin',
-    },
-    // Contact
+    // {
+    //   path: '/faq/new',
+    //   component: './faq/entry',
+    //   access: 'canAdmin',
+    // },
+    // {
+    //   path: '/faq/edit/:id',
+    //   component: './faq/update',
+    //   access: 'canAdmin',
+    // },
+    // {
+    //   path: '/faq/list',
+    //   icon: 'reconciliation',
+    //   name: 'FAQ',
+    //   component: './faq/list',
+    //   access: 'canAdmin',
+    // },
+    // // Contact
 
-    {
-      path: '/contact/new',
-      component: './contact/entry',
-      access: 'canAdmin',
-    },
-    {
-      path: '/contact/edit/:id',
-      component: './contact/update',
-      access: 'canAdmin',
-    },
-    {
-      path: '/contact/list',
-      icon: 'reconciliation',
-      name: 'contact',
-      component: './contact/list',
-      access: 'canAdmin',
-    },
-    {
-      name: 'Guests',
-      icon: 'reconciliation',
-      path: '/event/guest/:eventId',
-      component: './guest/list',
-      hideInMenu: false,
-      access: 'canAgency',
-    },
+    // {
+    //   path: '/contact/new',
+    //   component: './contact/entry',
+    //   access: 'canAdmin',
+    // },
+    // {
+    //   path: '/contact/edit/:id',
+    //   component: './contact/update',
+    //   access: 'canAdmin',
+    // },
+    // {
+    //   path: '/contact/list',
+    //   icon: 'reconciliation',
+    //   name: 'contact',
+    //   component: './contact/list',
+    //   access: 'canAdmin',
+    // },
+    // {
+    //   name: 'Guests',
+    //   icon: 'reconciliation',
+    //   path: '/event/guest/:eventId',
+    //   component: './guest/list',
+
+    //   hideInMenu: false,
+    //   exact: true,
+    //   access: 'canAgency',
+    // },
 
     // blogs
     // {
@@ -269,7 +278,6 @@ export default defineConfig({
     //   path: '/contact/edit/:id',
     //   component: './contact/update',
     // },
-
     {
       name: 'account',
       icon: 'user',
@@ -314,16 +322,14 @@ export default defineConfig({
     },
     {
       path: '/',
-      redirect: '/dashboard/analysis',
-      access: 'canAdmin',
+      redirect: '/class/list',
     },
-
     {
       component: '404',
     },
-    {
-      component: './event/list',
-    },
+    // {
+    //   component: './class/list',
+    // },
   ],
   theme: {
     'primary-color': defaultSettings.primaryColor,
@@ -355,11 +361,11 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  mfsu: {},
+  // mfsu: {},
   webpack5: {},
   exportStatic: {},
   define: {
-    API_URL: REACT_APP_API_URL || 'http://localhost:5001',
+    API_URL: REACT_APP_API_URL || 'http://localhost:5003',
     DEFAULT_PAGE_SIZE: REACT_APP_DEFAULT_PAGE_SIZE || 10,
   },
 });

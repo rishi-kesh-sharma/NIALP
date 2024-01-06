@@ -71,10 +71,10 @@ export default () => {
       placeholder="Site Search"
       defaultValue="umi ui"
       options={[
-        { label: 'MyRAJ Pro', value: 'MyRAJ Pro' },
+        { label: 'NIALP Pro', value: 'NIALP Pro' },
         {
-          label: 'MyRAJ',
-          value: 'MyRAJ',
+          label: 'NIALP',
+          value: 'NIALP',
         },
         {
           label: 'Pro Table',
@@ -206,8 +206,8 @@ RightContent It is a combination of the above components, with the addition of p
     options={[
       { label: <a href="https://umijs.org/zh/guide/umi-ui.html">umi ui</a>, value: 'umi ui' },
       {
-        label: <a href="next.ant.design">MyRAJ</a>,
-        value: 'MyRAJ',
+        label: <a href="next.ant.design">NIALP</a>,
+        value: 'NIALP',
       },
       {
         label: <a href="https://protable.ant.design/">Pro Table</a>,

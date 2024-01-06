@@ -3,7 +3,7 @@ export default [
     path: '/user',
     layout: false,
     routes: [
-      { path: '/user', routes: [{ path: '/user/login', component: './user/Login' }] },
+      { path: '/user', routes: [{ path: '/login', component: './user/Login' }] },
       { component: './404' },
     ],
   },

@@ -324,7 +324,7 @@ const Register = () => {
                 }}
               >
                 <Button block type="default">
-                  <Link to="/user/login">
+                  <Link to="/login">
                     <FormattedMessage id="pages.login.submit" defaultMessage="Login" />
                   </Link>
                 </Button>

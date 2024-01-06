@@ -58,15 +58,7 @@ const Login = () => {
         const { query } = history.location;
         const { redirect } = query;
         setUserLoginState(msg);
-        console.log(msg, 'data');
-        if (msg.role == 'admin') {
-          return history.push(redirect || '/event/list');
-        }
-
-        if (msg.role == 'agency') {
-          return history.push(redirect || `/event/guest/${localStorage.getItem('eventId')}`);
-        }
-        return history;
+        return history.push('/');
       }
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
@@ -77,15 +69,15 @@ const Login = () => {
     }
     setSubmitting(false);
   };
-
   const { status, type: loginType } = userLoginState;
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.top}>
           <div className={styles.header}>
             <Link to="/">
-              <span className={styles.title}>Marriage</span>
+              <span className={styles.title}>NIALP</span>
             </Link>
           </div>
           <div className={styles.desc}>
@@ -99,8 +91,8 @@ const Login = () => {
           <ProForm
             initialValues={{
               autoLogin: true,
-              email: 'rishi@gmail.com',
-              password: 'Nepal@123',
+              email: '',
+              password: '',
             }}
             submitter={{
               searchConfig: {
@@ -190,7 +182,7 @@ const Login = () => {
                 <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
               </ProFormCheckbox>
               <Link
-                to="/user/forgotpassword"
+                to="/forgotpassword"
                 style={{
                   float: 'right',
                 }}
@@ -208,11 +200,11 @@ const Login = () => {
               marginTop: 24,
             }}
           >
-            <Button block type="default">
-              <Link to="/user/register">
+            {/* <Button block type="default">
+              <Link to="/register">
                 <FormattedMessage id="pages.login.register" defaultMessage="Register" />
               </Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

@@ -7,11 +7,11 @@ const Settings = {
   fixedHeader: true,
   fixSiderbar: true,
   colorWeak: true,
-  title: 'Wedding',
+  title: 'NIALP',
   logo: false,
 
   pwa: false,
-  // logo: '../logo.jpg',
+  // logo: '/logo.png',
   iconfontUrl: '',
 };
 export default Settings;

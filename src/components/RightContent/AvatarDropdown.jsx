@@ -14,6 +14,7 @@ import { getAvatar } from '@/data/util';
  */
 const loginOut = async () => {
   localStorage.removeItem('auth');
+  // localStorage.removeItem('eventId');
   const { query = {}, pathname } = history.location;
   const { redirect } = query; // Note: There may be security issues, please note
 
@@ -32,8 +33,15 @@ const AvatarDropdown = ({ menu }) => {
   const { auth, setAuthentication } = useModel('getAuthState');
   const [currentUser, setCurrentUser] = useState(null);
   const loggedInUser = async () => {
-    const response = await getLoggedInUser();
-    setCurrentUser(response.data);
+    try {
+      const response = await getLoggedInUser();
+      if (response.data.success == false) {
+        return localStorage.removeItem('auth');
+      }
+      setCurrentUser(response.data);
+    } catch (err) {
+      localStorage.removeItem('auth');
+    }
   };
   useEffect(() => {
     loggedInUser();

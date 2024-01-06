@@ -26,7 +26,7 @@ request.interceptors.response.use(async (response, options) => {
   if (response.status === 401) {
     localStorage.removeItem('auth');
     history.replace({
-      pathname: '/user/login',
+      pathname: '/login',
     });
     return { name: response.name };
   }

@@ -42,7 +42,7 @@ const Articles = () => {
             }
             description={
               <span>
-                <Tag>MyRAJ</Tag>
+                <Tag>NIALP</Tag>
                 <Tag>Design Language</Tag>
                 <Tag>Ant Financial</Tag>
               </span>

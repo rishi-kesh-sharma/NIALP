@@ -1,4 +1,3 @@
-import { getLoggedInUser } from '@/pages/blogs/service';
 import { useState, useCallback, useEffect } from 'react';
 
 export default function useAuthModel() {

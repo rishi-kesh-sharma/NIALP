@@ -18,7 +18,7 @@ const ActivateAccount = (props) => {
       } else {
         message.success(result.message);
       }
-      history.push('/user/login');
+      history.push('/login');
     };
     verify();
   }, []);
