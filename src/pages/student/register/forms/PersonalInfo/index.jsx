@@ -22,10 +22,9 @@ const genderOptions = [
   },
 ];
 
-const PersonalInfo = ({ setTab, resource, updateStudent, personalInfo }) => {
+const PersonalInfo = ({ setTab, resource, updateStudent }) => {
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState([]);
-  const files = useGetFileFromUrl({ resource: personalInfo, multiple: true });
   const [mobileString, setMobileString] = useState('');
   const onFinish = async (values) => {
     console.log(values, 'values');
@@ -42,18 +41,12 @@ const PersonalInfo = ({ setTab, resource, updateStudent, personalInfo }) => {
     }
     await updateStudent(formData);
   };
-  useEffect(() => {
-    setFileList(files);
-  }, [files]);
 
   console.log(fileList);
 
   return (
     <div>
-      <ProForm
-        initialValues={personalInfo}
-        {...getFormProps({ form, onFinish, resource: personalInfo })}
-      >
+      <ProForm {...getFormProps({ form, onFinish, resource: resource })}>
         <ProFormText
           width="lg"
           label="Name"
@@ -61,13 +54,7 @@ const PersonalInfo = ({ setTab, resource, updateStudent, personalInfo }) => {
           rules={proFormPersonaInfoFieldValidation.name}
           placeholder="Please enter name"
         />
-        {/* <ProFormText
-          width="lg"
-          label="Mobile Number"
-          name="mobile"
-          rules={proFormPersonaInfoFieldValidation.mobile}
-          placeholder="Please enter mobile"
-        /> */}
+
         <ProForm.Item
           name={'mobile'}
           width="lg"

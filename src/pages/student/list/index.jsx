@@ -6,7 +6,7 @@ import {
   MailOutlined,
   DownloadOutlined,
 } from '@ant-design/icons';
-import { Button, message, Modal, Avatar } from 'antd';
+import { Button, message, Modal, Avatar, Card, Typography } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
@@ -16,7 +16,7 @@ import { getAvatar } from '@/data/util';
 import PaymentDetailModalForm from '../RoomDetailModal';
 import * as XLSX from 'xlsx';
 
-const TableList = ({ shiftId, students: resource }) => {
+const TableList = ({ shiftId, classId }) => {
   const actionRef = useRef();
   const access = useAccess();
   const [data, setData] = useState([]);
@@ -65,22 +65,22 @@ const TableList = ({ shiftId, students: resource }) => {
   };
 
   const columns = [
-    {
-      title: ' Avatar',
-      tip: 'Image',
-      dataIndex: 'image',
-      render: (dom, entity) => {
-        return (
-          <Link
-            onClick={() => {
-              history.push(`/student/edit/${entity._id}`);
-            }}
-          >
-            <Avatar src={getAvatar(entity?.name)} />
-          </Link>
-        );
-      },
-    },
+    // {
+    //   title: ' Avatar',
+    //   tip: 'Image',
+    //   dataIndex: 'image',
+    //   render: (dom, entity) => {
+    //     return (
+    //       <Link
+    //         onClick={() => {
+    //           history.push(`/student/edit/${entity._id}`);
+    //         }}
+    //       >
+    //         <Avatar src={getAvatar(entity?.name)} />
+    //       </Link>
+    //     );
+    //   },
+    // },
     {
       title: ' Name',
       tip: 'name',
@@ -105,6 +105,9 @@ const TableList = ({ shiftId, students: resource }) => {
     {
       title: 'Mobile',
       dataIndex: 'mobile',
+      render: (_, record) => {
+        return JSON.parse(record?.mobile)?.formattedValue;
+      },
     },
     {
       title: 'Payment Status',
@@ -151,7 +154,7 @@ const TableList = ({ shiftId, students: resource }) => {
   };
   const handleSendEmail = async (currentStudent) => {
     try {
-      const result = await sendEmail(currentStudent?._id, data?._id, {});
+      const result = await sendEmail(currentStudent?._id, classId, {});
       if (result.success == false) {
         return message.error(result.message || 'Cannot send email');
       }
@@ -242,17 +245,17 @@ const TableList = ({ shiftId, students: resource }) => {
   };
 
   const handleExport = () => {
-    const worksheet = XLSX.utils.json_to_sheet(data?.students);
+    const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    let buffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
     XLSX.writeFile(workbook, 'DataSheet.xlsx');
   };
   return (
     <>
-      <PageContainer pageHeaderRender={false}>
-        {/* <Form
+      {/* <Card title={<Typography.Title level={4}>Students</Typography.Title>} pageHeaderRender={false}> */}
+      {/* <Form
           form={form}
           name="advanced_search"
           className="ant-advanced-search-form"
@@ -283,64 +286,64 @@ const TableList = ({ shiftId, students: resource }) => {
             </Col>
           </Row>
         </Form> */}
-        <ProTable
-          defaultSize="small"
-          headerTitle="Student"
-          actionRef={actionRef}
-          columns={columns}
-          rowKey="_id"
-          search={false}
-          options={{ reload: false }}
-          dataSource={data}
-          pagination={{ pageSize: 6 }}
-          toolBarRender={() => {
-            const button =
-              data?.students?.length == 0 ? (
-                <Button
-                  type="primary"
-                  key="primary"
-                  onClick={() => {
-                    history.push(`/course/new`);
-                  }}
-                >
-                  Add Course
-                </Button>
-              ) : (
-                <Button
-                  type="primary"
-                  key="primary"
-                  onClick={() => {
-                    history.push(`/course/detail/${data?._id}`);
-                  }}
-                >
-                  View Course
-                </Button>
-              );
-            return [
-              <Button type="primary" key="primary" onClick={handleExport}>
-                <DownloadOutlined /> Export Students
-              </Button>,
-              button,
-              // <Button
-              //   type="primary"
-              //   key="primary"
-              //   onClick={() => {
-              //     history.push('/student/new');
-              //   }}
-              // >
-              //   <PlusOutlined /> New
-              // </Button>,
-            ];
-          }}
-        />
-        <PaymentDetailModalForm
-          setFetchResource={setFetchResources}
-          visible={paymentDetailModalVisible}
-          setVisible={setPaymentDetailModalVisible}
-          current={currentStudent}
-          studentId={currentStudent?._id}
-        />
-      </PageContainer>
+      <ProTable
+        defaultSize="small"
+        actionRef={actionRef}
+        columns={columns}
+        headerTitle={<Typography.Title level={4}>Students</Typography.Title>}
+        rowKey="_id"
+        search={false}
+        options={{ reload: false }}
+        dataSource={data}
+        pagination={{ pageSize: 6 }}
+        toolBarRender={() => {
+          const button =
+            data?.students?.length == 0 ? (
+              <Button
+                type="primary"
+                key="primary"
+                onClick={() => {
+                  history.push(`/course/new`);
+                }}
+              >
+                Add Course
+              </Button>
+            ) : (
+              <Button
+                type="primary"
+                key="primary"
+                onClick={() => {
+                  history.push(`/course/detail/${data?._id}`);
+                }}
+              >
+                Shift Detail
+              </Button>
+            );
+          return [
+            <Button type="primary" key="primary" onClick={handleExport}>
+              <DownloadOutlined /> Export Students
+            </Button>,
+            // button,
+            // <Button
+            //   type="primary"
+            //   key="primary"
+            //   onClick={() => {
+            //     history.push('/student/new');
+            //   }}
+            // >
+            //   <PlusOutlined /> New
+            // </Button>,
+          ];
+        }}
+      />
+      <PaymentDetailModalForm
+        setFetchResource={setFetchResources}
+        visible={paymentDetailModalVisible}
+        setVisible={setPaymentDetailModalVisible}
+        current={currentStudent}
+        studentId={currentStudent?._id}
+      />
+      {/* </Card> */}
     </>
   );
 };

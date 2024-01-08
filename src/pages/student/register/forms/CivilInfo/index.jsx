@@ -5,7 +5,7 @@ import ProForm, { ProFormDatePicker, ProFormRadio, ProFormText } from '@ant-desi
 import { Card, Form, Upload, message } from 'antd';
 import React, { useState } from 'react';
 
-const PaymentInfo = ({ setTab, resource, updateStudent, civilInfo }) => {
+const PaymentInfo = ({ setTab, resource, updateStudent }) => {
   const [form] = Form.useForm();
   const onFinish = async (values) => {
     const formData = new FormData();
@@ -19,7 +19,7 @@ const PaymentInfo = ({ setTab, resource, updateStudent, civilInfo }) => {
   };
   return (
     <div>
-      <ProForm {...getFormProps({ form, onFinish, resource: civilInfo })}>
+      <ProForm {...getFormProps({ form, onFinish, resource: resource })}>
         <ProFormText
           width="lg"
           label="Birth Place"

@@ -1,10 +1,5 @@
 import { Card, Form, message } from 'antd';
-import ProForm, {
-  ProFormText,
-  ProFormSelect,
-  ProFormDateTimePicker,
-  ProFormTextArea,
-} from '@ant-design/pro-form';
+import ProForm, { ProFormText, ProFormDatePicker, ProFormTextArea } from '@ant-design/pro-form';
 import { useRequest, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
 import React, { useEffect, useState } from 'react';
@@ -28,40 +23,26 @@ const BasicInfoForm = ({ setTab, addCourse }) => {
           rules={proFormCourseFieldValidation.name}
           placeholder="Please enter name"
         />
-        <ProFormText
+        {/* <ProFormText
           width="lg"
           label="Price"
           name="price"
           rules={proFormCourseFieldValidation.price}
           placeholder="Please enter Price"
-        />
-        {/* <ProFormText
-          width="lg"
-          label="Teacher name"
-          name="teacherName"
-          rules={proFormCourseFieldValidation.teacherName}
-          placeholder="Please enter teacher name"
-        />
-        <ProFormText
-          width="lg"
-          label="Zoom Link"
-          name="zoomLink"
-          rules={proFormCourseFieldValidation.zoomLink}
-          placeholder="Please enter zoom link"
         /> */}
-        <ProFormDateTimePicker
+        <ProFormDatePicker
           width="lg"
-          label="Start Date and Time"
+          label="Start Date "
           name="startDateTime"
           rules={proFormCourseFieldValidation.startDateTime}
-          placeholder="Please enter start date and time"
+          placeholder="Please enter start date "
         />
-        <ProFormDateTimePicker
+        <ProFormDatePicker
           width="lg"
-          label="End Date and Time"
+          label="End Date "
           name="endDateTime"
           rules={proFormCourseFieldValidation.endDateTime}
-          placeholder="Please enter end date and time"
+          placeholder="Please enter end date "
         />
         <ProFormTextArea
           width="lg"

@@ -147,21 +147,21 @@ export default defineConfig({
     //   component: './shift/list',
     //   hideInMenu: true,
     // },
-    // {
-    //   path: '/shift/new',
-    //   component: './shift/entry',
-    //   hideInMenu: true,
-    // },
+    {
+      path: '/shift/new/:classId',
+      component: './shift/entry',
+      hideInMenu: true,
+    },
     {
       path: '/shift/detail/:id',
       component: './shift/detail',
       hideInMenu: true,
     },
-    // {
-    //   path: '/shift/edit/:id',
-    //   component: './shift/update',
-    //   hideInMenu: true,
-    // },
+    {
+      path: '/shift/edit/:id',
+      component: './shift/update',
+      hideInMenu: true,
+    },
 
     // team
 
@@ -284,6 +284,14 @@ export default defineConfig({
       path: '/profile',
       hideInMenu: true,
       component: './account/settings',
+    },
+    {
+      name: 'student',
+      icon: 'user',
+      path: '/student/register',
+      hideInMenu: true,
+      component: './student/register',
+      layout: false,
     },
     {
       hideInMenu: true,

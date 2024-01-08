@@ -4,7 +4,7 @@ import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { Form } from 'antd';
 import React from 'react';
 
-const PaymentInfo = ({ setTab, resource, updateStudent, careerInfo }) => {
+const PaymentInfo = ({ setTab, resource, updateStudent }) => {
   const [form] = Form.useForm();
   const onFinish = async (values) => {
     const formData = new FormData();
@@ -18,7 +18,7 @@ const PaymentInfo = ({ setTab, resource, updateStudent, careerInfo }) => {
   };
   return (
     <div>
-      <ProForm {...getFormProps({ form, onFinish, resource: careerInfo })}>
+      <ProForm {...getFormProps({ form, onFinish, resource })}>
         <ProFormText
           width="lg"
           label="Education Level"

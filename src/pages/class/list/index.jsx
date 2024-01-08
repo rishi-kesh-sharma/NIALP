@@ -2,8 +2,7 @@ import { PlusOutlined, ExclamationCircleOutlined, DeleteOutlined } from '@ant-de
 import { Button, message, Pagination, Form, Row, Col, Input, DatePicker, Modal, Space } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import ProTable from '@ant-design/pro-table';
-import { Link } from 'umi';
+
 import { count, search, remove } from '../service';
 import CardList from '../card-list';
 

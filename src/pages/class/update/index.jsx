@@ -4,8 +4,10 @@ import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
 import { getById, save, update } from '../service';
 import Tabs from './tabs';
+import BasicInfoForm from './forms/BasicInfoForm';
+import { history } from 'umi';
 
-const EntryForm = (props) => {
+const UpdateForm = (props) => {
   const [resource, setResource] = useState(null);
   const [form] = Form.useForm();
   useEffect(() => {
@@ -22,17 +24,22 @@ const EntryForm = (props) => {
       message.error(result.message || 'Could not update!!');
     } else {
       message.success(result.message || 'Updated successfully!!');
-      form.resetFields();
-      history.push('/class/list');
+      // form.resetFields();
+      // history.push('/class/list');
+      history.goBack();
     }
   };
+  if (!resource) {
+    return null;
+  }
   return (
     <PageContainer pageHeaderRender={false}>
-      {resource && (
-        <Tabs updateCourse={updateCourse} resource={resource} setResource={setResource} />
-      )}
+      {/* {resource && ( */}
+      {/* <Tabs updateCourse={updateCourse} resource={resource} setResource={setResource} /> */}
+      <BasicInfoForm updateCourse={updateCourse} resource={resource} setResource={setResource} />
+      {/* )} */}
     </PageContainer>
   );
 };
 
-export default EntryForm;
+export default UpdateForm;

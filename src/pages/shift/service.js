@@ -12,8 +12,8 @@ export async function update(id, params) {
   return await put(`/shift/${id}`, params);
 }
 
-export async function save(params) {
-  return await post('/shift', params);
+export async function save(classId, params) {
+  return await post(`/shift/${classId}`, params);
 }
 
 export async function remove(id, options) {

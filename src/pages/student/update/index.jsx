@@ -4,7 +4,7 @@ import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
 import { getById, save, update } from '../service';
 import Tabs from './tabs';
-import { Link } from 'umi';
+import { history, Link } from 'umi';
 
 const EntryForm = (props) => {
   const [resource, setResource] = useState(null);
@@ -18,7 +18,6 @@ const EntryForm = (props) => {
     getResource(id);
   }, []);
   const updateStudent = async (values) => {
-    console.log(values, 'updaate values');
     const result = await update(resource?._id, values);
     if (result instanceof Error || result.status == 'error' || result.success == false) {
       message.error(result.message || 'Could not update!!');
@@ -29,7 +28,19 @@ const EntryForm = (props) => {
     }
   };
   return (
-    <PageContainer pageHeaderRender={false}>
+    <PageContainer
+      pageHeaderRender={false}
+      title={
+        <Button
+          onClick={() => {
+            history.goBack();
+          }}
+          type="primary"
+        >
+          Go Back
+        </Button>
+      }
+    >
       {resource && (
         <Tabs updateStudent={updateStudent} resource={resource} setResource={setResource} />
       )}

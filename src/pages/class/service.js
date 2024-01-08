@@ -2,7 +2,7 @@ import { get, post, put, del } from '/src/services/http-service';
 
 export async function search({ pageSize, current }) {
   return await get(
-    `/course`,
+    `/course?populate=shifts`,
     // params,
     {},
   );
@@ -23,7 +23,7 @@ export async function save(params) {
 export async function remove(id, options) {
   return await del(`/course/${id}`, {}, options);
 }
-export async function saveShift(classId,params) {
+export async function saveShift(classId, params) {
   return await post(`/shift/${classId}`, params);
 }
 export const validateUser = async (_, value, user) => {

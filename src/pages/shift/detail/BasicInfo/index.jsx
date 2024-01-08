@@ -45,7 +45,7 @@ const mobileMenu = (
   </Menu>
 );
 
-const Action = ({ data }) => {
+const Action = ({ shiftId, data }) => {
   const showDeleteConfirm = (data) => {
     confirm({
       title: `Do you Want to delete ${data.name}?`,
@@ -57,7 +57,7 @@ const Action = ({ data }) => {
       onOk: async () => {
         console.log('OK');
         const r = await remove(data._id);
-        history.push('/class/list');
+        history.goBack();
         if (r.success) {
           message.success(r.message || 'Deleted successfully!!');
         }
@@ -89,18 +89,27 @@ const Action = ({ data }) => {
               <ButtonGroup>
                 <Button
                   onClick={() => {
-                    showDeleteConfirm(data);
+                    history.goBack();
                   }}
+                  type="primary"
                 >
-                  Delete
+                  Go Back
                 </Button>
+
                 <Button
                   onClick={() => {
-                    history.push(`/course/edit/${shiftId}`);
+                    history.push(`/shift/edit/${shiftId}`);
                   }}
                   type="primary"
                 >
                   Update
+                </Button>
+                <Button
+                  onClick={() => {
+                    showDeleteConfirm(data);
+                  }}
+                >
+                  Delete
                 </Button>
               </ButtonGroup>
             </div>
@@ -115,8 +124,8 @@ const ShiftBasicDetail = ({ basicInfo }) => {
   const {
     name,
     description,
-    startDateTime,
-    endDateTime,
+    startTime,
+    endTime,
     price,
     zoomLink,
     teacherName,
@@ -142,20 +151,22 @@ const ShiftBasicDetail = ({ basicInfo }) => {
               }}
               // title="Class Basic Information"
             >
-              <Descriptions.Item label="Name">{name}</Descriptions.Item>
+              {/* <Descriptions.Item label="Name">{name}</Descriptions.Item> */}
               <Descriptions.Item label="Starts From ">
-                {moment(startDateTime).lang('en').format('LLL')}
+                {moment(startTime, 'HH:mm:ss').lang('en').format('hh:mm a')}
               </Descriptions.Item>
               <Descriptions.Item label="Ends At">
-                {moment(endDateTime).lang('en').format('LLL')}
+                {moment(endTime, 'HH:mm:ss').lang('en').format('hh:mm a')}
               </Descriptions.Item>
-              <Descriptions.Item label="Price">{price}</Descriptions.Item>
+              {/* <Descriptions.Item label="Price">{price}</Descriptions.Item> */}
               <Descriptions.Item label="Teacher Name">{teacherName}</Descriptions.Item>
-              <Descriptions.Item label="Zoom Link">{zoomLink}</Descriptions.Item>
-              <Descriptions.Item label="Description">{description}</Descriptions.Item>
+              <Descriptions.Item label="Zoom Link">
+                <a target="_blank" rel="noreferrer" href={zoomLink}>
+                  {zoomLink}
+                </a>
+              </Descriptions.Item>
+              {/* <Descriptions.Item label="Description">{description}</Descriptions.Item> */}
             </Descriptions>
-
-            <Divider />
           </Card>
         </GridContent>
       </div>

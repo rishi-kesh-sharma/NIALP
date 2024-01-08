@@ -6,13 +6,14 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import { Button, Card, Image, List, Typography, message, Modal } from 'antd';
-import { Link, useRequest } from 'umi';
+import { Link, useRequest, history } from 'umi';
 import styles from './style.less';
 import EventImage from '../../../assets/cover.jpg';
 import moment from 'moment';
 import { remove } from '../service';
+import { PageContainer } from '@ant-design/pro-layout';
 
-const CardList = ({ shifts: list }) => {
+const CardList = ({ setFetchResources, classId, shifts: list }) => {
   const { confirm } = Modal;
 
   const showDeleteConfirm = (shift) => {
@@ -39,13 +40,15 @@ const CardList = ({ shifts: list }) => {
   const handleDelete = (shift) => {
     showDeleteConfirm(shift);
   };
-  const handleShiftAdd = () => {};
+  const handleShiftAdd = () => {
+    history.push(`/shift/new/${classId}`);
+  };
   return (
-    // <PageContainer>
     <div className={styles.cardList}>
+      <Typography.Title level={4}>Shifts</Typography.Title>
       {list && (
         <List
-          style={{ marginTop: '2rem' }}
+          style={{ marginTop: '1rem' }}
           rowKey="id"
           // loading={loading}
           grid={{
@@ -80,28 +83,31 @@ const CardList = ({ shifts: list }) => {
                     //       item?.backgrounds?.length > 0
                     //         ? item?.backgrounds?.[0]?.image?.fileUrl
                     //         : EventImage
-                    //     }
+                    //     }k
                     //   />
                     // }
                     hoverable
                     className={styles.card}
                     actions={[
-                      <Link to={`/shift/detail/${item._id}`} key="option1">
-                        <EyeOutlined key="view" />,
+                      <Link to={`/shift/detail/${item._id}?classId=${classId}`} key="option1">
+                        <EyeOutlined key="view" />
                       </Link>,
                       <Link to={`/shift/edit/${item._id}`} key="option1">
-                        <EditOutlined key="edit" />,
+                        <EditOutlined key="edit" />
                       </Link>,
                       <DeleteOutlined onClick={() => handleDelete(item)} key="delete" />,
                     ]}
                   >
                     <p style={{ fontSize: '0.7rem', fontWeight: '500' }}>{item?.name}</p>
-                    <p style={{ fontSize: '0.7rem', fontWeight: '500' }}>{item?.price}</p>
-                    <div>
-                      <p>{moment(item?.startDateTime).lang('en').format('LLL')}</p>
+                    {/* <p style={{ fontSize: '0.7rem', fontWeight: '500' }}>{item?.price}</p> */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <p style={{ fontWeight: '600' }}>Start Time:</p>
+                      <p>{moment(item?.startTime, 'HH:mm:ss').lang('en').format('hh:mm a')}</p>
                     </div>
-                    <div>
-                      <p>{moment(item?.endDateTime).lang('en').format('LLL')}</p>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <p style={{ fontWeight: '600' }}>End Time:</p>
+                      <p>{moment(item?.endTime, 'HH:mm:ss').lang('en').format('hh:mm a')}</p>
                     </div>
                   </Card>
                 </List.Item>
@@ -111,7 +117,7 @@ const CardList = ({ shifts: list }) => {
             return (
               <List.Item onClick={handleShiftAdd}>
                 <Button type="dashed" className={styles.newButton}>
-                  <PlusOutlined /> Add New Event
+                  <PlusOutlined /> Add New Shift
                 </Button>
               </List.Item>
             );
@@ -119,7 +125,6 @@ const CardList = ({ shifts: list }) => {
         />
       )}
     </div>
-    // </PageContainer>
   );
 };
 

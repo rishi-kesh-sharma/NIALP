@@ -12,14 +12,26 @@ export async function update(id, params) {
   return await put(`/student/${id}`, params);
 }
 
-export async function save(params) {
-  return await post('/student', params);
+export async function save(classId, shiftId, params) {
+  return await post(`/student/${classId}/${shiftId}`, params);
 }
 export async function sendEmail(studentId, courseId, params) {
   return await post(`/send-email/${studentId}/${courseId}`, params);
 }
 export async function remove(id, options) {
   return await del(`/student/${id}`, {}, options);
+}
+
+export async function getClasses() {
+  return await get(
+    `/course`,
+    // params,
+    {},
+  );
+}
+
+export async function getShifts(id, options) {
+  return await get(`/course/detail/${id}?populate=shifts`, {}, options);
 }
 
 export const validateUser = async (_, value, user) => {

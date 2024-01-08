@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'umi';
+import { Link, history } from 'umi';
 import { ProCard } from '@ant-design/pro-components';
 import PersonalInfo from '../forms/PersonalInfo';
 import AddressInfo from '../forms/AddressInfo';
 import CareerInfo from '../forms/CareerInfo';
 import CivilInfo from '../forms/CivilInfo';
 import PaymentInfo from '../forms/PaymentInfo';
+import { Button } from 'antd';
 
 export default function Tabs({ resource, setResource, updateStudent }) {
   const [tab, setTab] = useState('personal-info');
@@ -71,6 +72,16 @@ export default function Tabs({ resource, setResource, updateStudent }) {
           //   <Button type="primary">Back to Events</Button>
           // </Link>
           'Update Student'
+        }
+        extra={
+          <Button
+            onClick={() => {
+              history.goBack();
+            }}
+            type="primary"
+          >
+            Go Back
+          </Button>
         }
         tabs={{
           tabPosition,

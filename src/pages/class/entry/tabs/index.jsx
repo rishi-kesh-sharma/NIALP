@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'umi';
+import { Link, history } from 'umi';
 import { ProCard } from '@ant-design/pro-components';
 
 import BasicInfoForm from '../forms/BasicInfoForm';
 import ShiftInfoForm from '../forms/ShiftInfoForm';
+import { Button } from 'antd';
 
 export default function Tabs({ addCourse, currentId }) {
   const [tab, setTab] = useState('basic-info');
@@ -12,6 +13,16 @@ export default function Tabs({ addCourse, currentId }) {
   return (
     <div>
       <ProCard
+        extra={
+          <Button
+            onClick={() => {
+              history.goBack();
+            }}
+            type="primary"
+          >
+            Go Back
+          </Button>
+        }
         title={
           // <Link key={'event-list'} to={'/event/list'}>
           //   <Button type="primary">Back to Events</Button>
@@ -32,9 +43,7 @@ export default function Tabs({ addCourse, currentId }) {
               disabled: !currentId,
               label: `Shift Info`,
               key: 'shift-info',
-              children: (
-                <ShiftInfoForm currentId={currentId} setTab={setTab}  />
-              ),
+              children: <ShiftInfoForm currentId={currentId} setTab={setTab} />,
             },
           ],
           onChange: (key) => {

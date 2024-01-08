@@ -5,6 +5,7 @@ import ProForm, {
   ProFormText,
   ProFormTextArea,
   ProFormDatePicker,
+  ProFormMoney,
 } from '@ant-design/pro-form';
 import styles from './styles.less';
 import { Button, Col, Form, Result, Row, Upload, message } from 'antd';
@@ -16,8 +17,10 @@ const PaymentDetailModalForm = (props) => {
   const { visible, children, setVisible, current, studentId, setFetchResource } = props;
   const [form] = Form.useForm();
   const callApi = async (values) => {
-    console.log(values, 'the values');
-    const result = await update(studentId, values);
+    const formData = new FormData();
+    formData.append('payableFee', values.payableFee);
+    formData.append('paidFee', values.paidFee);
+    const result = await update(studentId, formData);
     if (result instanceof Error || result.status == 'error' || result.success == false) {
       message.error(result.message || 'Could not update!!!');
     } else {
@@ -58,14 +61,16 @@ const PaymentDetailModalForm = (props) => {
       }}
     >
       <>
-        <ProFormText
+        <ProFormMoney
+          locale="es-ES"
           width="lg"
           label="Payable Fee"
           name="payableFee"
           rules={proFormPaymentInfoFieldValidation.payableFee}
           placeholder="Please enter payable fee"
         />
-        <ProFormText
+        <ProFormMoney
+          locale="es-ES"
           width="lg"
           label="Paid Fee"
           name="paidFee"

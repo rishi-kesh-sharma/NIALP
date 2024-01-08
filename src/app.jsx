@@ -8,7 +8,7 @@ const registerPath = '/register';
 const forgotpasswordPath = '/forgotpassword';
 const resetpasswordPath = '/resetpassword';
 const activateaccountPath = '/activateaccount';
-const agencyGuestListPath = '/event/guest';
+const studentRegisterPath = '/student/register';
 /** loading */
 export const initialStateConfig = {
   loading: <PageLoading />,
@@ -57,6 +57,9 @@ export const layout = ({ initialState }) => {
       let authStr = localStorage.getItem('auth');
 
       const { location } = history; // login
+      if (location.pathname == studentRegisterPath) {
+        return;
+      }
 
       if (!authStr || JSON.parse(authStr).isAuthenticated === false) {
         const allowedPath = [

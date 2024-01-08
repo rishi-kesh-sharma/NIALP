@@ -86,10 +86,10 @@ const CardList = ({ list, setFetchResources }) => {
                     className={styles.card}
                     actions={[
                       <Link to={`/course/detail/${item._id}`} key="option1">
-                        <EyeOutlined key="view" />,
+                        <EyeOutlined key="view" />
                       </Link>,
                       <Link to={`/course/edit/${item._id}`} key="option1">
-                        <EditOutlined key="edit" />,
+                        <EditOutlined key="edit" />
                       </Link>,
                       <DeleteOutlined onClick={() => handleDelete(item)} key="delete" />,
                     ]}
@@ -110,7 +110,7 @@ const CardList = ({ list, setFetchResources }) => {
             return (
               <List.Item>
                 <Button type="dashed" className={styles.newButton}>
-                  <PlusOutlined /> Add New Event
+                  <PlusOutlined /> Add New
                 </Button>
               </List.Item>
             );

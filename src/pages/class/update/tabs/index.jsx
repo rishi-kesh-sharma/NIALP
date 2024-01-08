@@ -45,20 +45,20 @@ export default function Tabs({ resource, setResource, updateCourse }) {
               ),
             },
 
-            {
-              // disabled: !currentId,
-              label: `Shift Info`,
-              key: 'shift-info',
-              children: (
-                <ShiftInfoForm
-                  setTab={setTab}
-                  resource={resource}
-                  setResource={setResource}
-                  updateCourse={updateCourse}
-                  shifts={shifts}
-                />
-              ),
-            },
+            // {
+            //   // disabled: !currentId,
+            //   label: `Shift Info`,
+            //   key: 'shift-info',
+            //   children: (
+            //     <ShiftInfoForm
+            //       setTab={setTab}
+            //       resource={resource}
+            //       setResource={setResource}
+            //       updateCourse={updateCourse}
+            //       shifts={shifts}
+            //     />
+            //   ),
+            // },
           ],
           onChange: (key) => {
             setTab(key);

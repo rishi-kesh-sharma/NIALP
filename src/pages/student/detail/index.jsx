@@ -88,11 +88,13 @@ const Action = ({ paymentStatus, studentId, data }) => {
               <ButtonGroup>
                 <Button
                   onClick={() => {
-                    showDeleteConfirm(data);
+                    history.goBack();
                   }}
+                  type="primary"
                 >
-                  Delete
+                  Go Back
                 </Button>
+
                 <Button
                   onClick={() => {
                     history.push(`/student/edit/${studentId}`);
@@ -100,6 +102,13 @@ const Action = ({ paymentStatus, studentId, data }) => {
                   type="primary"
                 >
                   Update
+                </Button>
+                <Button
+                  onClick={() => {
+                    showDeleteConfirm(data);
+                  }}
+                >
+                  Delete
                 </Button>
               </ButtonGroup>
             </div>
@@ -122,43 +131,6 @@ const PaymentStatus = ({ paymentStatus }) => {
     </div>
   );
 };
-
-const popoverContent = (
-  <div
-    style={{
-      width: 160,
-    }}
-  >
-    Wu Jia Hao
-    <span
-      className={styles.textSecondary}
-      style={{
-        float: 'right',
-      }}
-    >
-      <Badge
-        status="default"
-        text={
-          <span
-            style={{
-              color: 'rgba(0, 0, 0, 0.45)',
-            }}
-          >
-            No response
-          </span>
-        }
-      />
-    </span>
-    <div
-      className={styles.textSecondary}
-      style={{
-        marginTop: 4,
-      }}
-    >
-      Duration: 2 hours 25 minutes
-    </div>
-  </div>
-);
 
 const StudentDetail = (props) => {
   const { id: studentId } = props.match.params;
@@ -218,10 +190,10 @@ const StudentDetail = (props) => {
     paidFee: data?.paidFee,
   };
 
-  console.log(personalInfo?.image, 'image');
   return (
     <PageContainer
-      title={personalInfo.name}
+      // title={personalInfo.name}
+
       extra={<Action paymentStatus={paymentInfo.paymentStatus} studentId={data?._id} data={data} />}
       className={styles.pageHeader}
     >
@@ -243,7 +215,9 @@ const StudentDetail = (props) => {
               <Descriptions.Item label="Email">{personalInfo.email}</Descriptions.Item>
               <Descriptions.Item label="Date of Birth">{personalInfo.dob}</Descriptions.Item>
               <Descriptions.Item label="Gender">{personalInfo.sex}</Descriptions.Item>
-              <Descriptions.Item label="Phone Number">{personalInfo.mobile}</Descriptions.Item>
+              <Descriptions.Item label="Phone Number">
+                {personalInfo?.mobile && JSON.parse(personalInfo?.mobile)?.formattedValue}
+              </Descriptions.Item>
               <Descriptions.Item label="Telephone Number">
                 {personalInfo.telePhone}
               </Descriptions.Item>
@@ -308,9 +282,12 @@ const StudentDetail = (props) => {
                 {paymentInfo.paymentStatus}
               </Descriptions.Item>
               <Descriptions.Item label="Total Payable Fee">
-                {paymentInfo.payableFee}
+                &euro; {paymentInfo.payableFee}
               </Descriptions.Item>
-              <Descriptions.Item label="Paid Fee">{paymentInfo.paidFee}</Descriptions.Item>
+              <Descriptions.Item label="Paid Fee">
+                &euro;
+                {paymentInfo.paidFee}
+              </Descriptions.Item>
             </Descriptions>
             {personalInfo?.image?.image?.fileUrl && (
               <Descriptions

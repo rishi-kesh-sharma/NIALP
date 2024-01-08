@@ -53,19 +53,19 @@ export const proFormPersonaInfoFieldValidation = {
 };
 
 export const proFormAddressInfoFieldValidation = {
-  address: [{ min: 10, max: 30 }, { required: true }],
-  locality: [{ min: 3, max: 30 }, { required: true }],
+  address: [{ min: 10, max: 30 }, { required: false }],
+  locality: [{ min: 3, max: 30 }, { required: false }],
 
-  postal: [{ min: 3, max: 30 }, { required: true }],
-  municipality: [{ min: 3, max: 30 }, { required: true }],
-  district: [{ min: 3, max: 30 }, { required: true }],
+  postal: [{ min: 3, max: 30 }, { required: false }],
+  municipality: [{ min: 3, max: 30 }, { required: false }],
+  district: [{ min: 3, max: 30 }, { required: false }],
 };
 export const proFormCareerInfoFieldValidation = {
   birthPlace: [{ min: 10, max: 30 }, { required: true }],
-  locality: [{ min: 3, max: 30 }, { required: true }],
+  locality: [{ min: 3, max: 30 }, { required: false }],
 
-  postal: [{ min: 3, max: 30 }, { required: true }],
-  residencyNo: [{ min: 3, max: 30 }, { required: true }],
+  postal: [{ min: 3, max: 30 }, { required: false }],
+  residencyNo: [{ min: 3, max: 30 }, { required: false }],
   segurancaSocialNo: [{ min: 3, max: 30 }, { required: true }],
   nifNo: [{ min: 3, max: 30 }, { required: true }],
   expireDate: [
@@ -99,6 +99,9 @@ export const proFormPaymentInfoFieldValidation = {
 };
 export const proFormCourseFieldValidation = {
   name: [{ min: 3, max: 20 }, { required: true }],
+  teacherName: [{ min: 3, max: 20 }, { required: false }],
+  zoomLink: [{ min: 3, max: 20 }, { required: true }],
+
   price: [{ min: 3, max: 20 }, { required: false }],
   startDateTime: [
     { required: true },
@@ -134,13 +137,13 @@ export const proFormCourseFieldValidation = {
       },
     }),
   ],
-  startDateTime: [{ required: false }],
+  startDateTime: [{ required: true }],
   zoomLink: [{ min: 3, max: 200 }, { required: false }],
   description: [{ min: 3, max: 200 }, { required: false }],
   shifts: {
     name: [{ min: 3, max: 20 }, { required: true }],
-    startTime: [{ required: false }],
-    endTime: [{ required: false }],
+    startTime: [{ required: true }],
+    endTime: [{ required: true }],
   },
 };
 export const proFormUserFieldValidation = {

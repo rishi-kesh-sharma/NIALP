@@ -89,11 +89,13 @@ const Action = ({ classId, data }) => {
               <ButtonGroup>
                 <Button
                   onClick={() => {
-                    showDeleteConfirm(data);
+                    history.goBack();
                   }}
+                  type="primary"
                 >
-                  Delete
+                  Go Back
                 </Button>
+
                 <Button
                   onClick={() => {
                     history.push(`/class/edit/${classId}`);
@@ -101,6 +103,13 @@ const Action = ({ classId, data }) => {
                   type="primary"
                 >
                   Update
+                </Button>
+                <Button
+                  onClick={() => {
+                    showDeleteConfirm(data);
+                  }}
+                >
+                  Delete
                 </Button>
               </ButtonGroup>
             </div>
@@ -132,43 +141,16 @@ const ClassBasicDetail = ({ basicInfo }) => {
                 marginBottom: 12,
               }}
             >
-              <Descriptions.Item label="Name">{name}</Descriptions.Item>
               <Descriptions.Item label="Starts From ">
-                {moment(startDateTime).lang('en').format('LLL')}
+                {moment(startDateTime).lang('en').format('LL')}
               </Descriptions.Item>
               <Descriptions.Item label="Ends At">
-                {moment(endDateTime).lang('en').format('LLL')}
+                {moment(endDateTime).lang('en').format('LL')}
               </Descriptions.Item>
-              <Descriptions.Item label="Price">{price}</Descriptions.Item>
+              {/* <Descriptions.Item label="Price">{price}</Descriptions.Item> */}
 
-              <Descriptions.Item label="Description">{description}</Descriptions.Item>
+              {/* <Descriptions.Item label="Description">{description}</Descriptions.Item> */}
             </Descriptions>
-
-            {/* <Card
-              title={<Typography.Title level={5}>{'Shifts'}</Typography.Title>}
-              style={{
-                marginBottom: 12,
-                paddingLeft: 0,
-              }}
-              bordered={false}
-            >
-              {shifts?.map((shift, index) => {
-                return (
-                  <Descriptions
-                    key={shift.name}
-                    style={{
-                      marginBottom: 12,
-                    }}
-                    title={shift?.name}
-                  >
-                    <Descriptions.Item label="Name">{shift?.name}</Descriptions.Item>
-                    <Descriptions.Item label="Start Time">{shift?.startTime}</Descriptions.Item>
-                    <Descriptions.Item label="End Time">{shift?.endTime}</Descriptions.Item>
-                    <Descriptions.Item label="Price">{price}</Descriptions.Item>
-                  </Descriptions>
-                );
-              })}
-            </Card> */}
           </Card>
         </GridContent>
       </div>

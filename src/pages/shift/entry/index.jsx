@@ -1,38 +1,46 @@
 import CustomUpload from '@/components/CustomUpload';
-import getFormProps from '@/data/getFormProps';
+import getFormProps, { getSmallFormProps } from '@/data/getFormProps';
 import {
   proFormAddressInfoFieldValidation,
   proFormCourseFieldValidation,
   regexData,
 } from '@/data/util';
-import { saveShift } from '@/pages/class/service';
-import ProForm, {
-  ProFormDatePicker,
-  ProFormDateTimePicker,
-  ProFormRadio,
-  ProFormText,
-  ProFormTimePicker,
-} from '@ant-design/pro-form';
-import { Card, Form, Upload, message } from 'antd';
-import React, { useState } from 'react';
-
-const ShiftInfoForm = ({ setTab, currentId }) => {
+import { ProCard } from '@ant-design/pro-components';
+import ProForm, { ProFormText, ProFormTimePicker } from '@ant-design/pro-form';
+import { Button, Card, Divider, Form, Typography, Upload, message } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { getById, save, update } from '../service';
+import { history } from 'umi';
+const ShiftForm = (props) => {
   const [form] = Form.useForm();
+  const { classId } = props.match.params;
   const onFinish = async (values) => {
-    if (currentId) {
-      const result = await saveShift(currentId, values);
-      if (result instanceof Error || result.status == 'error' || result.success == false) {
-        message.error(result.message || 'Could not add!!');
-      } else {
-        message.success(result.message || 'Added successfully!!');
-        form.resetFields();
-      }
+    const result = await save(classId, values);
+    if (result instanceof Error || result.status == 'error' || result.success == false) {
+      message.error(result.message || 'Could not add!!');
+    } else {
+      message.success(result.message || 'Added successfully!!');
+      history.goBack();
     }
   };
   return (
-    <div>
-      <ProForm {...getFormProps({ form, onFinish })}>
+    // <ProForm resource={shift}>
+    <ProCard
+      title={'Add Shift'}
+      extra={
+        <Button
+          onClick={() => {
+            history.goBack();
+          }}
+          type="primary"
+        >
+          Go Back
+        </Button>
+      }
+    >
+      <ProForm title="Shift Update" {...getFormProps({ form, onFinish })} name="shift">
         <ProFormText
+          // disabled
           width="lg"
           label="Name"
           name={`name`}
@@ -55,7 +63,7 @@ const ShiftInfoForm = ({ setTab, currentId }) => {
           label="End Time"
           name={`endTime`}
           // name="endTime
-          rules={proFormCourseFieldValidation.shifts.endDateTime}
+          rules={proFormCourseFieldValidation.shifts.endTime}
           placeholder="Please enter End Time"
         />
         <ProFormText
@@ -73,8 +81,8 @@ const ShiftInfoForm = ({ setTab, currentId }) => {
           placeholder="Please enter zoom link"
         />
       </ProForm>
-    </div>
+    </ProCard>
   );
 };
 
-export default ShiftInfoForm;
+export default ShiftForm;
