@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, Result, Button, Descriptions, Divider, Alert, Statistic, message } from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
-import ProForm, { ProFormDigit, ProFormSelect, ProFormText, StepsForm } from '@ant-design/pro-form';
+import ProForm, {
+  ProFormDigit,
+  ProFormSelect,
+  ProFormText,
+  ProFormTextArea,
+  StepsForm,
+} from '@ant-design/pro-form';
 import styles from './style.less';
 import Personal from './forms/step-form/Personal';
 import Address from './forms/step-form/Address';
@@ -15,14 +21,6 @@ const StepResult = (props) => {
       status="success"
       title="Operation Successful"
       subTitle="Expected to be credited within two hours"
-      // extra={
-      //   <>
-      //     <Button type="primary" onClick={props.onFinish}>
-      //       Transfer Again
-      //     </Button>
-      //     <Button>View Statement</Button>
-      //   </>
-      // }
       className={styles.result}
     >
       {props.children}
@@ -37,7 +35,8 @@ const StepForm = () => {
   const [current, setCurrent] = useState(0);
   const formRef = useRef();
 
-  const [fileList, setFileList] = useState([]);
+  const [residentCardCopyFileList, setResidentCardCopyFileList] = useState([]);
+  const [paymentProofFileList, setPaymentProofFileList] = useState([]);
   const [mobileString, setMobileString] = useState('');
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const onFinish = async (values) => {
@@ -51,13 +50,15 @@ const StepForm = () => {
     formData.append('mobile', mobileString);
     formData.append('email', values?.email);
     formData.append('dob', values?.dob);
+    formData.append('age', values?.age);
     formData.append('sex', values?.sex);
     formData.append('telePhone', values?.telePhone);
 
-    console.log(fileList, 'filelist');
-
-    for (let i = 0; i < fileList.length; i++) {
-      formData.append('image', fileList?.[i]?.originFileObj);
+    for (let i = 0; i < residentCardCopyFileList.length; i++) {
+      formData.append('residentCardCopy', residentCardCopyFileList?.[i]?.originFileObj);
+    }
+    for (let i = 0; i < paymentProofFileList.length; i++) {
+      formData.append('paymentProof', residentCardCopyFileList?.[i]?.originFileObj);
     }
     // todo:address info
     formData.append('address', values.address);
@@ -67,12 +68,20 @@ const StepForm = () => {
     formData.append('district', values.district);
 
     // todo:career info
+
+    // todo:educational info
     formData.append('educationLevel', values.educationLevel);
+    // todo:employment info
     formData.append('employmentStatus', values.employmentStatus);
-    formData.append('employmentLocality', values.employmentLocality);
-    formData.append('functionality', values.dob);
+    //todo:professional info
+    formData.append('entityEmployer', values.entityEmployer);
+    formData.append('noOfEmployees', values.noOfEmployees);
+    formData.append('professionLocality', values.professionLocality);
+    // formData.append('locality', values.locality);
+    formData.append('functionality', values.functionality);
 
     // todo:civil info
+    formData.append('nationality', values.nationality);
     formData.append('birthPlace', values.birthPlace);
     formData.append('residencyNo', values.residencyNo);
     formData.append('segurancaSocialNo', values.segurancaSocialNo);
@@ -85,8 +94,12 @@ const StepForm = () => {
       message.error(result.message || 'Could not register!!');
     } else {
       message.success(result.message || 'Registered successfully!!');
-      formRef.current?.resetFields();
-      setCurrent(0);
+      setIsFormSubmitted(true);
+      formRef.current.resetFields();
+      setTimeout(() => {
+        setCurrent(0);
+        setIsFormSubmitted(false);
+      }, 3000);
     }
   };
 
@@ -95,16 +108,12 @@ const StepForm = () => {
     setShifts(result?.data?.shifts);
   };
   const handleClassChange = async (value) => {
-    console.log(value, 'class value');
     await fetchShifts(value);
   };
-
   const fetchClasses = async () => {
     const result = await getClasses();
     setClasses(result?.data);
   };
-
-  console.log(shifts, 'shifts');
   useEffect(async () => {
     fetchClasses();
   }, []);
@@ -116,7 +125,10 @@ const StepForm = () => {
     return { name: item.name, label: item.name.toUpperCase(), value: item?._id };
   });
   return (
-    <PageContainer content="Register here for portugese language class">
+    <PageContainer
+      title={'PORTUGUESE LANGUAGE REGISTRATION FORM'}
+      // content="Register for portuguese language class"
+    >
       <Card bordered={false}>
         <StepsForm
           formRef={formRef}
@@ -125,7 +137,7 @@ const StepForm = () => {
           onCurrentChange={setCurrent}
           submitter={{
             render: (props, dom) => {
-              if (props.step === 5) {
+              if (props.step === 5 && isFormSubmitted && residentCardCopyFileList.length > 0) {
                 return null;
               }
               return dom;
@@ -135,31 +147,42 @@ const StepForm = () => {
           <StepsForm.StepForm
             layout="vertical"
             size="large"
-            colProps={{ span: 7 }}
+            // colProps={{ span: 7 }}
+            colProps={{ sm: { span: 24 }, md: { span: 10 }, lg: { span: 7 } }}
             rowProps={{ gutter: 12 }}
             grid={true}
-            formRef={formRef}
-            title="Personal "
+            title="Personal"
             onFinish={async (values) => {
               console.log(values, 'values');
+              if (residentCardCopyFileList.length == 0) {
+                message.error('Resident card copy  is required');
+                // Promise.reject(new Error('Image is required'));
+                return false;
+              }
+              if (paymentProofFileList.length == 0) {
+                message.error('Payment Proof  is required');
+                // Promise.reject(new Error('Image is required'));
+                return false;
+              }
               setStepData(values);
               return true;
             }}
           >
             <Personal
-              fileList={fileList}
-              setFileList={setFileList}
+              residentCardCopyFileList={residentCardCopyFileList}
+              setResidentCardCopyFileList={setResidentCardCopyFileList}
+              paymentProofFileList={paymentProofFileList}
+              setPaymentProofFileList={setPaymentProofFileList}
               mobileString={mobileString}
               setMobileString={setMobileString}
             />
           </StepsForm.StepForm>
-          <StepsForm.StepForm
+          {/* <StepsForm.StepForm
             layout="vertical"
             size="large"
             colProps={{ span: 7 }}
             rowProps={{ gutter: 12 }}
             grid={true}
-            formRef={formRef}
             title="Address "
             initialValues={stepData}
             onFinish={async (values) => {
@@ -171,14 +194,13 @@ const StepForm = () => {
             }}
           >
             <Address />
-          </StepsForm.StepForm>
+          </StepsForm.StepForm> */}
           <StepsForm.StepForm
             layout="vertical"
             size="large"
             colProps={{ span: 7 }}
             rowProps={{ gutter: 12 }}
             grid={true}
-            formRef={formRef}
             title="Civil "
             initialValues={stepData}
             onFinish={async (values) => {
@@ -191,11 +213,10 @@ const StepForm = () => {
           <StepsForm.StepForm
             layout="vertical"
             size="large"
-            colProps={{ span: 7 }}
+            colProps={{ sm: { span: 24 }, md: { span: 10 }, lg: { span: 7 } }}
             rowProps={{ gutter: 12 }}
             grid={true}
-            formRef={formRef}
-            title="Career "
+            title="Career"
             initialValues={stepData}
             onFinish={async (values) => {
               setStepData(values);
@@ -206,37 +227,48 @@ const StepForm = () => {
           </StepsForm.StepForm>
 
           <StepsForm.StepForm title="Completion">
-            <div className={styles.result}>
-              <Alert
-                closable
-                showIcon
-                message="After submitting the information, you will be registered to take the classes"
-                style={{
-                  marginBottom: 24,
-                }}
-              />
-              <Divider
-                style={{
-                  margin: '24px 0',
-                }}
-              />
-            </div>
+            {isFormSubmitted ? (
+              <StepResult />
+            ) : (
+              <>
+                {/* <ProFormTextArea
+                  width="xl"
+                  label="FUNCTIONALITY"
+                  name="functionality"
+                  // rules={proFormAddressInfoFieldValidation.functionality}
+                  placeholder="Please enter queries(if any)"
+                /> */}
 
-            <ProFormSelect
-              options={classesOptions}
-              label={'Choose Class'}
-              name={'class'}
-              onMetaChange={handleClassChange}
-              onChange={handleClassChange}
-            />
-            <ProFormSelect name={'shift'} options={shiftsOptions} label={'Choose Shift'} />
-            {isFormSubmitted && (
-              <StepResult
-                onFinish={async () => {
-                  setCurrent(0);
-                  formRef.current?.resetFields();
-                }}
-              />
+                <ProFormSelect
+                  options={classesOptions}
+                  label={'Choose Class'}
+                  name={'class'}
+                  onMetaChange={handleClassChange}
+                  onChange={handleClassChange}
+                  rules={[{ required: true }]}
+                />
+                <ProFormSelect
+                  rules={[{ required: true }]}
+                  name={'shift'}
+                  options={shiftsOptions}
+                  label={'Choose Shift'}
+                />
+                <div className={styles.result}>
+                  <Alert
+                    closable
+                    showIcon
+                    message="After submitting the information, you will be registered for class"
+                    style={{
+                      marginBottom: 24,
+                    }}
+                  />
+                  <Divider
+                    style={{
+                      margin: '24px 0',
+                    }}
+                  />
+                </div>
+              </>
             )}
           </StepsForm.StepForm>
         </StepsForm>

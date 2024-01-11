@@ -140,7 +140,7 @@ const StudentDetail = (props) => {
   });
 
   const personalInfo = {
-    image: data?.image,
+    residentCardCopy: data?.residentCardCopy,
     name: data?.name,
     mobile: data?.mobile,
     email: data?.email,
@@ -289,7 +289,7 @@ const StudentDetail = (props) => {
                 {paymentInfo.paidFee}
               </Descriptions.Item>
             </Descriptions>
-            {personalInfo?.image?.image?.fileUrl && (
+            {personalInfo?.residentCardCopy?.image?.fileUrl && (
               <Descriptions
                 title="Document Information"
                 style={{
@@ -297,7 +297,7 @@ const StudentDetail = (props) => {
                 }}
               >
                 <Descriptions.Item>
-                  <Image src={personalInfo?.image?.image?.fileUrl} />
+                  <Image src={personalInfo?.residentCardCopy?.image?.fileUrl} />
                 </Descriptions.Item>
               </Descriptions>
             )}

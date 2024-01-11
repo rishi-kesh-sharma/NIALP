@@ -38,13 +38,14 @@ export const proFormPersonaInfoFieldValidation = {
     },
   ],
   dob: [
-    // { required: true },
+    { required: true },
     ({ getFieldValue }) => ({
       validator(_, value) {
-        if (value || value + 20 < Date.now()) {
+        const msIn18Years = 16 * (365 + 0.25) * 86400 * 1000;
+        if (value && value + msIn18Years < Date.now()) {
           return Promise.resolve();
         }
-        return Promise.reject(new Error('Minimum age should be 20 years '));
+        return Promise.reject(new Error('Minimum age should be 18 years '));
       },
     }),
   ],

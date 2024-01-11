@@ -24,45 +24,52 @@ const Civil = (props) => {
     <>
       <ProFormText
         width="lg"
-        label="Birth Place"
+        label="NATIONALITY"
+        name="nationality"
+        // rules={proFormCareerInfoFieldValidation.birthPlace}
+        placeholder="Please enter nationality"
+      />
+      <ProFormText
+        width="lg"
+        label="BIRTH PLACE"
         name="birthPlace"
-        rules={proFormCareerInfoFieldValidation.birthPlace}
+        // rules={proFormCareerInfoFieldValidation.birthPlace}
         placeholder="Please enter birth place"
       />
       {/* <ProFormText
           width="lg"
           label="Postal Number"
           name="postal"
-          rules={proFormCareerInfoFieldValidation.postal}
+          // rules={proFormCareerInfoFieldValidation.postal}
           placeholder="Please enter postal number"
         /> */}
       <ProFormText
         width="lg"
-        label="residencyNo"
+        label="RESIDENCY NO"
         name="residencyNo"
-        rules={proFormCareerInfoFieldValidation.residencyNo}
-        placeholder="Please enter residencyNo"
+        // rules={proFormCareerInfoFieldValidation.residencyNo}
+        placeholder="Please enter residency no"
       />
       <ProFormText
         width="lg"
-        label="Seguranca Social No"
+        label="SEGURANCA SOCIAL NO"
         name="segurancaSocialNo"
-        rules={proFormCareerInfoFieldValidation.segurancaSocialNo}
+        // rules={proFormCareerInfoFieldValidation.segurancaSocialNo}
         placeholder="Please enter seguranca social no"
       />
       <ProFormText
         width="lg"
-        label="NIF No"
+        label="NIF NO"
         name="nifNo"
-        rules={proFormCareerInfoFieldValidation.nifNo}
+        // rules={proFormCareerInfoFieldValidation.nifNo}
         placeholder="Please enter seguranca nif no"
       />
       <ProFormDatePicker
         validateFirst
         width={'lg'}
         name="expireDate"
-        label="Expiry Date"
-        rules={proFormCareerInfoFieldValidation.expireDate}
+        label="EXPIRY DATE"
+        // rules={proFormCareerInfoFieldValidation.expireDate}
       />
     </>
     // </ProCard>

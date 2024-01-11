@@ -7,11 +7,12 @@ const Settings = {
   fixedHeader: true,
   fixSiderbar: true,
   colorWeak: true,
-  title: 'NIALP',
-  logo: false,
+  // title: '',
+  title: false,
+  logo: true,
 
   pwa: false,
-  // logo: '/logo.png',
+  logo: '/logo.png',
   iconfontUrl: '',
 };
 export default Settings;

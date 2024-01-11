@@ -1,15 +1,26 @@
+import { patch } from '@/services/http-service';
 import { get, post, put, del } from '/src/services/http-service';
 
 export async function search(shiftId, params) {
-  return await get(`/shift/student/${shiftId}?populate=students&populate=students.image`, params);
+  return await get(
+    `/shift/student/${shiftId}?populate=students&populate=students.residentCardCopy&populate=students.paymentProof&limit=100&pageSize=100`,
+    params,
+  );
 }
 
 export async function getById(id, options) {
-  return await get(`/student/detail/${id}?populate=image`, {}, options);
+  return await get(
+    `/student/detail/${id}?populate=residentCardCopy&populate=paymentProof`,
+    {},
+    options,
+  );
 }
 
 export async function update(id, params) {
   return await put(`/student/${id}`, params);
+}
+export async function reEnrollStudent(classId, shiftId, params) {
+  return await patch(`/course/${classId}/${shiftId}`, params);
 }
 
 export async function save(classId, shiftId, params) {
@@ -24,7 +35,7 @@ export async function remove(id, options) {
 
 export async function getClasses() {
   return await get(
-    `/course`,
+    `/course?pin=true`,
     // params,
     {},
   );

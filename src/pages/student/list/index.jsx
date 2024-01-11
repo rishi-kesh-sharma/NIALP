@@ -11,19 +11,23 @@ import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import { Link, history, useAccess } from 'umi';
-import { search, remove, sendEmail } from '../service';
+import { search, remove, sendEmail, getClasses, getShifts } from '../service';
 import { getAvatar } from '@/data/util';
-import PaymentDetailModalForm from '../RoomDetailModal';
+import PaymentDetailModalForm from '../PaymentDetailModal';
 import * as XLSX from 'xlsx';
+import ReEnrollModalForm from '../ReEnrollModalForm';
 
 const TableList = ({ shiftId, classId }) => {
   const actionRef = useRef();
   const access = useAccess();
+  const [classes, setClasses] = useState([]);
+  const [shifts, setShifts] = useState([]);
   const [data, setData] = useState([]);
   const [searchObject, setSearchObject] = useState({});
   const [sort, setSort] = useState({});
   const [fetchResources, setFetchResources] = useState(false);
   const [paymentDetailModalVisible, setPaymentDetailModalVisible] = useState(false);
+  const [reEnrollModalVisible, setReEnrollModalVisible] = useState(false);
   const [currentStudent, setCurrentStudent] = useState({});
 
   const { confirm } = Modal;
@@ -60,6 +64,21 @@ const TableList = ({ shiftId, classId }) => {
     setFetchResources(true);
   }, [searchObject]);
 
+  const fetchShifts = async (classId) => {
+    const result = await getShifts(classId);
+    setShifts(result?.data?.shifts);
+  };
+  const handleClassChange = async (value) => {
+    await fetchShifts(value);
+  };
+  const fetchClasses = async () => {
+    const result = await getClasses();
+    setClasses(result?.data);
+  };
+
+  useEffect(async () => {
+    fetchClasses();
+  }, []);
   const onFinish = (values) => {
     setSearchObject(values);
   };
@@ -138,7 +157,13 @@ const TableList = ({ shiftId, classId }) => {
           record={record}
           elementId="student-list-update-payment-btn"
         />,
-        <EmailButton key="email" record={record} elementId="student-list-email-btn" />,
+        <ReEnrollButton
+          currentStudent={record}
+          key="delete"
+          record={record}
+          elementId="student-list-re-enroll-payment-btn"
+        />,
+        // <EmailButton key="email" record={record} elementId="student-list-email-btn" />,
       ],
     },
   ];
@@ -198,6 +223,25 @@ const TableList = ({ shiftId, classId }) => {
       </>
     );
   };
+  const handleReEnrollModal = (currentStudent) => {
+    setCurrentStudent(currentStudent);
+    setReEnrollModalVisible(true);
+  };
+  const ReEnrollButton = ({ currentStudent }) => {
+    return (
+      <>
+        <Button
+          onClick={() => {
+            handleReEnrollModal(currentStudent);
+          }}
+          type="primary"
+        >
+          {' '}
+          Re-Enroll
+        </Button>
+      </>
+    );
+  };
   const DeleteButton = (props) => {
     const { elementId } = props;
 
@@ -236,7 +280,6 @@ const TableList = ({ shiftId, classId }) => {
             showDeleteConfirm(props.record);
           }}
         >
-          {/* Delete */}
           <DeleteOutlined style={{ textAlign: 'center' }} />
         </a>
       );
@@ -340,6 +383,18 @@ const TableList = ({ shiftId, classId }) => {
         setFetchResource={setFetchResources}
         visible={paymentDetailModalVisible}
         setVisible={setPaymentDetailModalVisible}
+        current={currentStudent}
+        studentId={currentStudent?._id}
+      />
+      <ReEnrollModalForm
+        handleClassChange={handleClassChange}
+        shifts={shifts}
+        classes={classes}
+        setShifts={setShifts}
+        setClasses={setClasses}
+        setFetchResource={setFetchResources}
+        visible={reEnrollModalVisible}
+        setVisible={setReEnrollModalVisible}
         current={currentStudent}
         studentId={currentStudent?._id}
       />

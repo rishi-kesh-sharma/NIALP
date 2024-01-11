@@ -24,7 +24,7 @@ const CardList = ({ list, setFetchResources }) => {
     confirm({
       title: `Do you Want to delete? `,
       icon: <ExclamationCircleOutlined />,
-      content: `Event will be deleted permanently.`,
+      content: `Class will be deleted permanently.`,
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',

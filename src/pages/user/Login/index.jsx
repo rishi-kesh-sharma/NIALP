@@ -6,6 +6,7 @@ import { useIntl, Link, history, FormattedMessage, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import { login } from './service';
 import styles from './index.less';
+import LogoImage from '../../../assets/logo.png';
 
 const LoginMessage = ({ content }) => (
   <Alert
@@ -75,18 +76,16 @@ const Login = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.top}>
-          <div className={styles.header}>
-            <Link to="/">
-              <span className={styles.title}>NIALP</span>
-            </Link>
-          </div>
-          <div className={styles.desc}>
-            {intl.formatMessage({
-              id: 'pages.layouts.userLayout.title',
-            })}
-          </div>
+          <img
+            src={LogoImage}
+            style={{
+              height: '105px',
+              // width: '400px',
+              objectFit: 'contain',
+              marginBottom: '10rem !important',
+            }}
+          />
         </div>
-
         <div className={styles.main}>
           <ProForm
             initialValues={{
@@ -119,7 +118,7 @@ const Login = () => {
                 key="account"
                 tab={intl.formatMessage({
                   id: 'pages.login.accountLogin.tab',
-                  defaultMessage: 'Account password login',
+                  // defaultMessage: 'Account password login',
                 })}
               />
             </Tabs>
@@ -172,15 +171,17 @@ const Login = () => {
                 />
               </>
             )}
-            {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+            {status === 'error' && loginType === 'mobile' && (
+              <LoginMessage content="Verification code error" />
+            )}
             <div
               style={{
-                marginBottom: 24,
+                marginBottom: '24px !important',
               }}
             >
-              <ProFormCheckbox noStyle name="autoLogin">
+              {/* <ProFormCheckbox noStyle name="autoLogin">
                 <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
-              </ProFormCheckbox>
+              </ProFormCheckbox> */}
               <Link
                 to="/forgotpassword"
                 style={{
@@ -194,18 +195,6 @@ const Login = () => {
               </Link>
             </div>
           </ProForm>
-
-          <div
-            style={{
-              marginTop: 24,
-            }}
-          >
-            {/* <Button block type="default">
-              <Link to="/register">
-                <FormattedMessage id="pages.login.register" defaultMessage="Register" />
-              </Link>
-            </Button> */}
-          </div>
         </div>
       </div>
       <Footer />

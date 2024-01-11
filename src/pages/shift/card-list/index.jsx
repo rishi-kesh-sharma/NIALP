@@ -20,7 +20,7 @@ const CardList = ({ setFetchResources, classId, shifts: list }) => {
     confirm({
       title: `Do you Want to delete? `,
       icon: <ExclamationCircleOutlined />,
-      content: `Event will be deleted permanently.`,
+      content: `Shift will be deleted permanently.`,
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',

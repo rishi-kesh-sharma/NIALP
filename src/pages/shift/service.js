@@ -5,7 +5,11 @@ export async function search(classId, { pageSize, current }) {
 }
 
 export async function getById(id, options) {
-  return await get(`/shift/detail/${id}?populate=students&populate=students.image`, {}, options);
+  return await get(
+    `/shift/detail/${id}?populate=students&populate=students.residentCardCopy&populate=students.paymentProof`,
+    {},
+    options,
+  );
 }
 
 export async function update(id, params) {

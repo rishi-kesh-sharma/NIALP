@@ -20,37 +20,37 @@ const Address = (props) => {
     <>
       <ProFormText
         width="lg"
-        label="Address"
+        label="ADDRESS IN PORTUGAL"
         name="address"
-        rules={proFormAddressInfoFieldValidation.address}
+        // rules={proFormAddressInfoFieldValidation.address}
         placeholder="Please enter address"
       />
       <ProFormText
         width="lg"
-        label="Locality"
+        label="LOCALITY"
         name="locality"
-        rules={proFormAddressInfoFieldValidation.locality}
+        // rules={proFormAddressInfoFieldValidation.locality}
         placeholder="Please enter locality"
       />
       <ProFormText
         width="lg"
         label="Postal No"
         name="postal"
-        rules={proFormAddressInfoFieldValidation.postal}
+        // rules={proFormAddressInfoFieldValidation.postal}
         placeholder="Please enter postal number"
       />
       <ProFormText
         width="lg"
-        label="Municipality"
+        label="MUNICIPALITY"
         name="municipality"
-        rules={proFormAddressInfoFieldValidation.municipality}
+        // rules={proFormAddressInfoFieldValidation.municipality}
         placeholder="Please enter municipality"
       />
       <ProFormText
         width="lg"
-        label="District"
+        label="DISTRICT"
         name="district"
-        rules={proFormAddressInfoFieldValidation.district}
+        // rules={proFormAddressInfoFieldValidation.district}
         placeholder="Please enter district"
       />
     </>

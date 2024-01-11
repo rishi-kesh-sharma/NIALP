@@ -2,7 +2,7 @@ import { get, post, put, del } from '/src/services/http-service';
 
 export async function search({ pageSize, current }) {
   return await get(
-    `/course?populate=shifts`,
+    `/course?pin=true&populate=shifts`,
     // params,
     {},
   );
