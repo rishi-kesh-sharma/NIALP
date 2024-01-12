@@ -24,7 +24,6 @@ const CustomPhoneInput = (props) => {
   };
   return (
     <PhoneInput
-      inputStyle={{ width: '100%' }}
       prefix="+"
       enableSearch
       value={mobile.formattedValue}

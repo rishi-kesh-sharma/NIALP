@@ -1,5 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Card, Result, Button, Descriptions, Divider, Alert, Statistic, message } from 'antd';
+import {
+  Card,
+  Result,
+  Button,
+  Descriptions,
+  Divider,
+  Alert,
+  Statistic,
+  message,
+  Typography,
+} from 'antd';
 import { PageContainer } from '@ant-design/pro-layout';
 import ProForm, {
   ProFormDigit,
@@ -14,13 +24,15 @@ import Address from './forms/step-form/Address';
 import Career from './forms/step-form/Career';
 import Civil from './forms/step-form/Civil';
 import { classes, getClasses, getShifts, save } from '../service';
+import LogoImage from '../../../assets/logo.png';
 
 const StepResult = (props) => {
   return (
     <Result
+      style={{ background: 'white !important' }}
       status="success"
-      title="Operation Successful"
-      subTitle="Expected to be credited within two hours"
+      title="Congratulations !!! Registered Successfully"
+      subTitle="Admin will contact you shortly"
       className={styles.result}
     >
       {props.children}
@@ -28,13 +40,18 @@ const StepResult = (props) => {
   );
 };
 
+const sizes = { small: 'sm', medium: 'md', large: 'lg' };
 const StepForm = () => {
   const [classes, setClasses] = useState([]);
   const [shifts, setShifts] = useState([]);
   const [stepData, setStepData] = useState({});
   const [current, setCurrent] = useState(0);
+  const [currentSize, setCurrentSize] = useState(null);
   const formRef = useRef();
-
+  const personalFormRef = useRef();
+  const civilFormRef = useRef();
+  const careerFormRef = useRef();
+  const completeFormRef = useRef();
   const [residentCardCopyFileList, setResidentCardCopyFileList] = useState([]);
   const [paymentProofFileList, setPaymentProofFileList] = useState([]);
   const [mobileString, setMobileString] = useState('');
@@ -77,7 +94,6 @@ const StepForm = () => {
     formData.append('entityEmployer', values.entityEmployer);
     formData.append('noOfEmployees', values.noOfEmployees);
     formData.append('professionLocality', values.professionLocality);
-    // formData.append('locality', values.locality);
     formData.append('functionality', values.functionality);
 
     // todo:civil info
@@ -97,10 +113,26 @@ const StepForm = () => {
       setIsFormSubmitted(true);
       formRef.current.resetFields();
       setTimeout(() => {
-        setCurrent(0);
-        setIsFormSubmitted(false);
+        // setCurrent(0);
+        // setIsFormSubmitted(false);
       }, 3000);
     }
+  };
+
+  console.log(formRef, 'formREf');
+  const handleDone = () => {
+    console.log(formRef, 'form ref');
+    personalFormRef.current?.resetFields();
+    careerFormRef.current?.resetFields();
+    civilFormRef.current?.resetFields();
+    completeFormRef.current?.resetFields();
+    setResidentCardCopyFileList([]);
+    setPaymentProofFileList([]);
+    setMobileString('');
+    setClasses([]);
+    setShifts([]);
+    setCurrent(0);
+    setIsFormSubmitted(false);
   };
 
   const fetchShifts = async (classId) => {
@@ -118,6 +150,30 @@ const StepForm = () => {
     fetchClasses();
   }, []);
 
+  const handleWindowResize = () => {
+    if (window.innerWidth < 425) {
+      setCurrentSize(sizes.small);
+    }
+    if (window.innerWidth >= 425 && window.innerWidth < 768) {
+      setCurrentSize(sizes.medium);
+    }
+    if (window.innerWidth >= 768) {
+      setCurrentSize(sizes.large);
+    }
+  };
+  useEffect(() => {
+    if (window.innerWidth < 425) {
+      setCurrentSize(sizes.small);
+    }
+    if (window.innerWidth > 425 && window.innerWidth < 768) {
+      setCurrentSize(sizes.medium);
+    }
+    if (window.innerWidth >= 768) {
+      setCurrentSize(sizes.large);
+    }
+    window.addEventListener('resize', handleWindowResize);
+  }, []);
+
   const classesOptions = classes?.map((item) => {
     return { name: item.name, label: item.name.toUpperCase(), value: item?._id };
   });
@@ -126,10 +182,15 @@ const StepForm = () => {
   });
   return (
     <PageContainer
-      title={'PORTUGUESE LANGUAGE REGISTRATION FORM'}
-      // content="Register for portuguese language class"
+      title={false}
+      content={
+        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <img style={{ height: '3rem', width: '10rem', objectFit: 'contain' }} src={LogoImage} />
+          <h3 style={{ fontWeight: 'bold' }}> REGISTRATION FOR PORTUGUESE LANGUAGE COURSE</h3>
+        </div>
+      }
     >
-      <Card bordered={false}>
+      <Card bordered={false} style={{ overflowX: 'hidden !important', width: '300px !important' }}>
         <StepsForm
           formRef={formRef}
           onFinish={onFinish}
@@ -137,7 +198,7 @@ const StepForm = () => {
           onCurrentChange={setCurrent}
           submitter={{
             render: (props, dom) => {
-              if (props.step === 5 && isFormSubmitted && residentCardCopyFileList.length > 0) {
+              if (props.step === 3 && isFormSubmitted && residentCardCopyFileList.length > 0) {
                 return null;
               }
               return dom;
@@ -145,6 +206,7 @@ const StepForm = () => {
           }}
         >
           <StepsForm.StepForm
+            formRef={personalFormRef}
             layout="vertical"
             size="large"
             // colProps={{ span: 7 }}
@@ -156,19 +218,26 @@ const StepForm = () => {
               console.log(values, 'values');
               if (residentCardCopyFileList.length == 0) {
                 message.error('Resident card copy  is required');
-                // Promise.reject(new Error('Image is required'));
                 return false;
               }
               if (paymentProofFileList.length == 0) {
                 message.error('Payment Proof  is required');
-                // Promise.reject(new Error('Image is required'));
                 return false;
               }
+              if (mobileString.length < 8) {
+                message.error('Mobile Number is required');
+                return false;
+              }
+              // if (Number(values.age) < 16) {
+              //   message.error('Age must at least 16 years!');
+              //   return false;
+              // }
               setStepData(values);
               return true;
             }}
           >
             <Personal
+              currentSize={currentSize}
               residentCardCopyFileList={residentCardCopyFileList}
               setResidentCardCopyFileList={setResidentCardCopyFileList}
               paymentProofFileList={paymentProofFileList}
@@ -196,9 +265,10 @@ const StepForm = () => {
             <Address />
           </StepsForm.StepForm> */}
           <StepsForm.StepForm
+            formRef={civilFormRef}
             layout="vertical"
             size="large"
-            colProps={{ span: 7 }}
+            colProps={{ sm: { span: 24 }, md: { span: 10 }, lg: { span: 7 } }}
             rowProps={{ gutter: 12 }}
             grid={true}
             title="Civil "
@@ -208,9 +278,10 @@ const StepForm = () => {
               return true;
             }}
           >
-            <Civil />
+            <Civil currentSize={currentSize} />
           </StepsForm.StepForm>
           <StepsForm.StepForm
+            formRef={careerFormRef}
             layout="vertical"
             size="large"
             colProps={{ sm: { span: 24 }, md: { span: 10 }, lg: { span: 7 } }}
@@ -223,13 +294,17 @@ const StepForm = () => {
               return true;
             }}
           >
-            <Career />
+            <Career currentSize={currentSize} />
           </StepsForm.StepForm>
 
-          <StepsForm.StepForm title="Completion">
-            {isFormSubmitted ? (
-              <StepResult />
-            ) : (
+          {isFormSubmitted ? (
+            <StepResult>
+              <Button onClick={handleDone} type="primary">
+                Done
+              </Button>
+            </StepResult>
+          ) : (
+            <StepsForm.StepForm formRef={completeFormRef} title="Completion">
               <>
                 {/* <ProFormTextArea
                   width="xl"
@@ -240,6 +315,7 @@ const StepForm = () => {
                 /> */}
 
                 <ProFormSelect
+                  width={currentSize}
                   options={classesOptions}
                   label={'Choose Class'}
                   name={'class'}
@@ -248,12 +324,18 @@ const StepForm = () => {
                   rules={[{ required: true }]}
                 />
                 <ProFormSelect
+                  width={currentSize}
                   rules={[{ required: true }]}
                   name={'shift'}
                   options={shiftsOptions}
                   label={'Choose Shift'}
                 />
-                <div className={styles.result}>
+                <div
+                  style={{
+                    width: `${currentSize == 'sm' ? '220px' : 'auto'}`,
+                    maxWidth: '100vw !important',
+                  }}
+                >
                   <Alert
                     closable
                     showIcon
@@ -269,8 +351,8 @@ const StepForm = () => {
                   />
                 </div>
               </>
-            )}
-          </StepsForm.StepForm>
+            </StepsForm.StepForm>
+          )}
         </StepsForm>
         <Divider
           style={{

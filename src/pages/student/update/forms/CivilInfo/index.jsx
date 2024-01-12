@@ -1,6 +1,10 @@
 import CustomUpload from '@/components/CustomUpload';
 import getFormProps from '@/data/getFormProps';
-import { proFormCareerInfoFieldValidation, regexData } from '@/data/util';
+import {
+  proFormCareerInfoFieldValidation,
+  proFormCivilInfoFieldValidation,
+  regexData,
+} from '@/data/util';
 import ProForm, { ProFormDatePicker, ProFormRadio, ProFormText } from '@ant-design/pro-form';
 import { Card, Form, Upload, message } from 'antd';
 import React, { useState } from 'react';
@@ -24,35 +28,35 @@ const PaymentInfo = ({ setTab, resource, updateStudent, civilInfo }) => {
           width="lg"
           label="Birth Place"
           name="birthPlace"
-          rules={proFormCareerInfoFieldValidation.birthPlace}
+          rules={proFormCivilInfoFieldValidation.birthPlace}
           placeholder="Please enter birth place"
         />
         {/* <ProFormText
           width="lg"
           label="Postal Number"
           name="postal"
-          rules={proFormCareerInfoFieldValidation.postal}
+          rules={proFormCivilInfoFieldValidation.postal}
           placeholder="Please enter postal number"
         /> */}
         <ProFormText
           width="lg"
           label="residencyNo"
           name="residencyNo"
-          rules={proFormCareerInfoFieldValidation.residencyNo}
+          rules={proFormCivilInfoFieldValidation.residencyNo}
           placeholder="Please enter residencyNo"
         />
         <ProFormText
           width="lg"
           label="Seguranca Social No"
           name="segurancaSocialNo"
-          rules={proFormCareerInfoFieldValidation.segurancaSocialNo}
+          rules={proFormCivilInfoFieldValidation.segurancaSocialNo}
           placeholder="Please enter seguranca social no"
         />
         <ProFormText
           width="lg"
           label="NIF No"
           name="nifNo"
-          rules={proFormCareerInfoFieldValidation.nifNo}
+          rules={proFormCivilInfoFieldValidation.nifNo}
           placeholder="Please enter seguranca nif no"
         />
 
@@ -61,7 +65,7 @@ const PaymentInfo = ({ setTab, resource, updateStudent, civilInfo }) => {
           width={'lg'}
           name="expireDate"
           label="Expiry Date"
-          rules={proFormCareerInfoFieldValidation.expireDate}
+          rules={proFormCivilInfoFieldValidation.expireDate}
         />
       </ProForm>
     </div>

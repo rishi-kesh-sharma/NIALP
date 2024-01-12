@@ -7,10 +7,9 @@ const Settings = {
   fixedHeader: true,
   fixSiderbar: true,
   colorWeak: true,
-  // title: '',
-  title: false,
+  title: '',
+  // title: false,
   logo: true,
-
   pwa: false,
   logo: '/logo.png',
   iconfontUrl: '',

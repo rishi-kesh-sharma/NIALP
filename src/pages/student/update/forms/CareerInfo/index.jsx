@@ -35,7 +35,7 @@ const PaymentInfo = ({ setTab, resource, updateStudent, careerInfo }) => {
         />
         <ProFormText
           width="lg"
-          label="employmentLocality"
+          label="Employment Locality"
           name="employmentLocality"
           rules={proFormAddressInfoFieldValidation.employmentLocality}
           placeholder="Please enter employment locality"

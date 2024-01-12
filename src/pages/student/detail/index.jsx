@@ -5,6 +5,7 @@ import {
   DownOutlined,
   EllipsisOutlined,
   ExclamationCircleOutlined,
+  FilePdfFilled,
   InfoCircleOutlined,
 } from '@ant-design/icons';
 import {
@@ -32,6 +33,7 @@ import styles from './style.less';
 import { queryAdvancedProfile } from '@/pages/profile/advanced/service';
 import { getById, remove } from '../service';
 import { getAvatar } from '@/data/util';
+import { getUrlExtension } from '@/utils';
 
 const { Step } = Steps;
 const ButtonGroup = Button.Group;
@@ -141,6 +143,8 @@ const StudentDetail = (props) => {
 
   const personalInfo = {
     residentCardCopy: data?.residentCardCopy,
+    paymentProof: data?.paymentProof,
+    residentCardCopyPdf: data?.residentCardCopyPdf,
     name: data?.name,
     mobile: data?.mobile,
     email: data?.email,
@@ -289,18 +293,61 @@ const StudentDetail = (props) => {
                 {paymentInfo.paidFee}
               </Descriptions.Item>
             </Descriptions>
-            {personalInfo?.residentCardCopy?.image?.fileUrl && (
+            {personalInfo?.paymentProof?.image?.fileUrl && (
               <Descriptions
-                title="Document Information"
+                title="Payment Proof Image"
                 style={{
                   marginBottom: 24,
                 }}
               >
                 <Descriptions.Item>
-                  <Image src={personalInfo?.residentCardCopy?.image?.fileUrl} />
+                  <Image src={personalInfo?.paymentProof?.image?.fileUrl} />
                 </Descriptions.Item>
               </Descriptions>
             )}
+            {console.log(personalInfo?.residentCardCopy)}
+
+            {personalInfo?.residentCardCopy?.length > 0 && (
+              <Descriptions
+                title="Resident Card Copy "
+                style={{
+                  marginBottom: 24,
+                }}
+              >
+                {personalInfo?.residentCardCopy?.map((item, index) => {
+                  const fileExtension = getUrlExtension(item?.image?.fileUrl);
+
+                  return (
+                    <Descriptions.Item key={`${index}`}>
+                      {fileExtension == 'pdf' ? (
+                        <a
+                          download
+                          // download={item?.image?.fileUrl}
+                          href={item?.image?.fileUrl}
+                        >
+                          <FilePdfFilled />
+                          Download Resident Card Copy Pdf
+                        </a>
+                      ) : (
+                        <Image src={item?.image?.fileUrl} />
+                      )}
+                    </Descriptions.Item>
+                  );
+                })}
+              </Descriptions>
+            )}
+            {/* {personalInfo?.residentCardCopyPdf?.image?.fileUrl && (
+              <Descriptions
+                title="Resident Card Copy Pdf"
+                style={{
+                  marginBottom: 24,
+                }}
+              >
+                <Descriptions.Item>
+                  <Image src={personalInfo?.residentCardCopyPdf?.image?.fileUrl} />
+                </Descriptions.Item>
+              </Descriptions>
+            )} */}
           </Card>
         </GridContent>
       </div>

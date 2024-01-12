@@ -90,8 +90,8 @@ const Login = () => {
           <ProForm
             initialValues={{
               autoLogin: true,
-              email: '',
-              password: '',
+              email: 'admin@gmail.com',
+              password: 'Nepal@123',
             }}
             submitter={{
               searchConfig: {

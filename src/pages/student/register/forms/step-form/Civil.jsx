@@ -4,13 +4,15 @@ import getFormProps from '@/data/getFormProps';
 import {
   proFormAddressInfoFieldValidation,
   proFormCareerInfoFieldValidation,
+  proFormCivilInfoFieldValidation,
   proFormPersonaInfoFieldValidation,
 } from '@/data/util';
 import { ProCard } from '@ant-design/pro-components';
 import ProForm, { ProFormDatePicker, ProFormRadio, ProFormText } from '@ant-design/pro-form';
 import React from 'react';
 
-const Civil = (props) => {
+const Civil = ({ currentSize }) => {
+  console.log(currentSize, 'currentSize');
   return (
     // <ProCard
     //   bordered
@@ -23,53 +25,47 @@ const Civil = (props) => {
     // >
     <>
       <ProFormText
-        width="lg"
+        width={currentSize}
         label="NATIONALITY"
         name="nationality"
-        // rules={proFormCareerInfoFieldValidation.birthPlace}
+        rules={proFormCivilInfoFieldValidation.nationality}
         placeholder="Please enter nationality"
       />
       <ProFormText
-        width="lg"
+        width={currentSize}
         label="BIRTH PLACE"
         name="birthPlace"
-        // rules={proFormCareerInfoFieldValidation.birthPlace}
+        rules={proFormCivilInfoFieldValidation.birthPlace}
         placeholder="Please enter birth place"
       />
-      {/* <ProFormText
-          width="lg"
-          label="Postal Number"
-          name="postal"
-          // rules={proFormCareerInfoFieldValidation.postal}
-          placeholder="Please enter postal number"
-        /> */}
+
       <ProFormText
-        width="lg"
+        width={currentSize}
         label="RESIDENCY NO"
         name="residencyNo"
-        // rules={proFormCareerInfoFieldValidation.residencyNo}
+        rules={proFormCivilInfoFieldValidation.residencyNo}
         placeholder="Please enter residency no"
       />
       <ProFormText
-        width="lg"
+        width={currentSize}
         label="SEGURANCA SOCIAL NO"
         name="segurancaSocialNo"
-        // rules={proFormCareerInfoFieldValidation.segurancaSocialNo}
+        rules={proFormCivilInfoFieldValidation.segurancaSocialNo}
         placeholder="Please enter seguranca social no"
       />
       <ProFormText
-        width="lg"
+        width={currentSize}
         label="NIF NO"
         name="nifNo"
-        // rules={proFormCareerInfoFieldValidation.nifNo}
+        rules={proFormCivilInfoFieldValidation.nifNo}
         placeholder="Please enter seguranca nif no"
       />
       <ProFormDatePicker
         validateFirst
-        width={'lg'}
+        width={currentSize}
         name="expireDate"
         label="EXPIRY DATE"
-        // rules={proFormCareerInfoFieldValidation.expireDate}
+        rules={proFormCivilInfoFieldValidation.expireDate}
       />
     </>
     // </ProCard>

@@ -83,6 +83,7 @@ const ReEnrollModalForm = (props) => {
         rules={[{ required: true }]}
       />
       <ProFormSelect
+        style={{ paddingY: '1rem !important' }}
         rules={[{ required: true }]}
         name={'shift'}
         options={shiftsOptions}

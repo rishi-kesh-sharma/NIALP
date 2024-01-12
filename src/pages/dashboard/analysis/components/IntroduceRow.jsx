@@ -20,7 +20,14 @@ const topColResponsiveProps = {
   },
 };
 
-const IntroduceRow = ({ loading, visitData ,property,blogCount,userCount,propertyPurchaseCount}) => (
+const IntroduceRow = ({
+  loading,
+  visitData,
+  property,
+  blogCount,
+  userCount,
+  propertyPurchaseCount,
+}) => (
   <Row gutter={24}>
     <Col {...topColResponsiveProps}>
       <ChartCard
@@ -61,7 +68,7 @@ const IntroduceRow = ({ loading, visitData ,property,blogCount,userCount,propert
         // footer={<Field label="Conversion rate" value="60%" />}
         contentHeight={46}
       >
-        <TinyColumn xField="x" height={46} forceFit yField="y"  />
+        <TinyColumn xField="x" height={46} forceFit yField="y" />
       </ChartCard>
     </Col>
     <Col {...topColResponsiveProps}>
@@ -78,7 +85,7 @@ const IntroduceRow = ({ loading, visitData ,property,blogCount,userCount,propert
         // footer={<Field label="Conversion rate" value="60%" />}
         contentHeight={46}
       >
-        <TinyColumn xField="x" height={46} forceFit yField="y"  />
+        <TinyColumn xField="x" height={46} forceFit yField="y" />
       </ChartCard>
     </Col>
     <Col {...topColResponsiveProps}>

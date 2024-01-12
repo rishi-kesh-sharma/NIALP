@@ -12,7 +12,7 @@ export const proFormPersonaInfoFieldValidation = {
   name: [{ min: 3, max: 20 }, { required: true }],
   mobile: [
     {
-      // required: true,
+      required: true,
     },
     {
       pattern: regexData.phone,
@@ -37,15 +37,56 @@ export const proFormPersonaInfoFieldValidation = {
       message: 'Enter valid email address!',
     },
   ],
+  age: [
+    {
+      required: true,
+    },
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        if (isNaN(value)) {
+          return Promise.reject(new Error('Age must be number '));
+        } else if (Number(value) < 16) {
+          return Promise.reject(new Error('Age cannot le less than 16 '));
+        } else {
+          return Promise.resolve();
+        }
+      },
+    }),
+  ],
+  gender: [
+    {
+      required: true,
+    },
+  ],
+
   dob: [
     { required: true },
     ({ getFieldValue }) => ({
       validator(_, value) {
-        const msIn18Years = 16 * (365 + 0.25) * 86400 * 1000;
-        if (value && value + msIn18Years < Date.now()) {
+        console.log(new Date().getTime(), 'new date');
+        console.log(new Date(value).getTime(), 'value date');
+        console.log(value < new Date(), 'value');
+        const msIn16Years = 16 * (365 + 0.25) * 86400 * 1000;
+        if (value && value + msIn16Years < Date.now()) {
           return Promise.resolve();
         }
-        return Promise.reject(new Error('Minimum age should be 18 years '));
+        return Promise.reject(new Error('Minimum age should be 16 years '));
+      },
+    }),
+  ],
+
+  updateDob: [
+    { required: true },
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        const currentDate = new Date().getTime();
+        const inputDate = new Date(value).getTime();
+        const msIn16Years = 16 * (365 + 0.25) * 86400 * 1000;
+        console.log(value && inputDate + msIn16Years < currentDate, 'truthy');
+        if (value && inputDate + msIn16Years < currentDate) {
+          return Promise.resolve();
+        }
+        return Promise.reject(new Error('Minimum age should be 16 years '));
       },
     }),
   ],
@@ -54,32 +95,41 @@ export const proFormPersonaInfoFieldValidation = {
 };
 
 export const proFormAddressInfoFieldValidation = {
-  address: [{ min: 10, max: 30 }, { required: false }],
-  locality: [{ min: 3, max: 30 }, { required: false }],
+  address: [{ min: 10, max: 30 }, { required: true }],
+  locality: [{ min: 3, max: 30 }, { required: true }],
 
-  postal: [{ min: 3, max: 30 }, { required: false }],
-  municipality: [{ min: 3, max: 30 }, { required: false }],
-  district: [{ min: 3, max: 30 }, { required: false }],
+  postal: [{ min: 3, max: 30 }, { required: true }],
+  municipality: [{ min: 3, max: 30 }, { required: true }],
+  district: [{ min: 3, max: 30 }, { required: true }],
 };
 export const proFormCareerInfoFieldValidation = {
-  birthPlace: [{ min: 10, max: 30 }, { required: true }],
-  locality: [{ min: 3, max: 30 }, { required: false }],
-
-  postal: [{ min: 3, max: 30 }, { required: false }],
-  residencyNo: [{ min: 3, max: 30 }, { required: false }],
-  segurancaSocialNo: [{ min: 3, max: 30 }, { required: true }],
-  nifNo: [{ min: 3, max: 30 }, { required: true }],
-  expireDate: [
-    { required: true },
+  educationLevel: [{ min: 3, max: 30 }, { required: true }],
+  employmentStatus: [{ min: 3, max: 30 }, { required: true }],
+  entityEmployer: [{ min: 3, max: 30 }, { required: false }],
+  noOfEmployees: [
+    { required: false },
     ({ getFieldValue }) => ({
       validator(_, value) {
-        if (value || value < Date.now()) {
+        console.log(value);
+        if (isNaN(value)) {
+          return Promise.reject(new Error('Number of Employees must be number '));
+        } else {
           return Promise.resolve();
         }
-        return Promise.reject(new Error('Minimum age should be 20 years '));
       },
     }),
   ],
+  professionLocality: [{ required: false }],
+  functionality: [{ required: false }],
+  otherQualification: [{ required: false }],
+};
+export const proFormCivilInfoFieldValidation = {
+  nationality: [{ min: 3, max: 30 }, { required: true }],
+  birthPlace: [{ min: 3, max: 30 }, { required: true }],
+  residencyNo: [{ min: 3, max: 30 }, { required: true }],
+  segurancaSocialNo: [{ required: true }],
+  nifNo: [{ required: true }],
+  expireDate: [{ required: true }],
 };
 export const proFormPaymentInfoFieldValidation = {
   paymentStatus: [{ min: 3, max: 30 }, { required: true }],
@@ -169,214 +219,7 @@ export const proFormUserFieldValidation = {
     },
   ],
 };
-export const proFormBlogFieldValidation = {
-  title: [{ min: 20, max: 100 }, { required: true }],
-  short_description: [{ min: 10, max: 200 }, { required: true }],
-  meta_description: [{ min: 10, max: 200 }, { required: false }],
-  slug_url: [
-    { min: 5, max: 80 },
-    { required: true },
-    {
-      message: 'Each tag should be separated by underscore',
-      pattern: /^(\w+(_\w+)*)?$/,
-    },
-  ],
 
-  tags: [
-    { required: true },
-    {
-      message: 'Each tag should be separated by comma and start with #',
-      pattern: /^#(\w+)(,#\w+)*$/,
-    },
-  ],
-
-  meta_tags: [
-    { required: true },
-    {
-      message: 'Each meta tag should be separated by comma and start with #',
-      pattern: /^#(\w+)(,#\w+)*$/,
-    },
-  ],
-  keywords: [
-    { required: true },
-    {
-      message: 'Each keyword should be separated by comma',
-      pattern: /^\w+(,\w+)*$/,
-    },
-  ],
-  description: [{ min: 50, max: 1000 }, { required: true }],
-};
-export const proFormEventFieldValidation = {
-  title: [{ min: 10, max: 100 }, { required: true }],
-  venue: [{ min: 3, max: 100 }, { required: true }],
-  startDateTime: [
-    { required: true },
-    ({ getFieldValue }) => ({
-      validator(_, value) {
-        if (!value || value > Date.now()) {
-          return Promise.resolve();
-        }
-        return Promise.reject(new Error('The start Date cannot be past date'));
-      },
-    }),
-  ],
-  endDateTime: [
-    { required: true },
-    ({ getFieldValue }) => ({
-      validator(_, value) {
-        if (!getFieldValue('startDateTime')) {
-          return Promise.reject(new Error('First Enter start date time'));
-        }
-        if (!value) {
-          return Promise.reject(new Error('The end date time is required'));
-        }
-        if (value < Date.now()) {
-          return Promise.reject(new Error('The end Date cannot be past date'));
-        }
-
-        if (value + 1 < getFieldValue('startDateTime')) {
-          return Promise.reject(
-            new Error('The end date should be at least one day after start date time'),
-          );
-        }
-        return Promise.resolve();
-      },
-    }),
-  ],
-  brideName: [{ min: 3, max: 30 }, { required: true }],
-  groomName: [{ min: 3, max: 30 }, { required: true }],
-  brideAddress: [{ min: 3, max: 30 }, { required: true }],
-  groomAddress: [{ min: 3, max: 30 }, { required: true }],
-  brideAge: [{ min: 3, max: 100 }, { required: true }],
-  groomAge: [{ min: 3, max: 100 }, { required: true }],
-  days: [{ required: true }],
-  description: [{ min: 100, max: 1000 }, { required: true }],
-  friend: {
-    name: [{ min: 3, max: 30 }, { required: true }],
-    side: [{ required: true }],
-    relation: [{ min: 3, max: 30 }, { required: true }],
-    fbLink: [
-      {
-        pattern: regexData.fbLink,
-        message: 'Enter valid facebook link!',
-      },
-    ],
-    instaLink: [
-      {
-        pattern: regexData.instaLink,
-        message: 'Enter valid instagram link!',
-      },
-    ],
-  },
-  guest: {
-    name: [{ min: 3, max: 30 }, { required: true }],
-    email: [
-      {
-        required: true,
-      },
-      {
-        pattern: regexData.email,
-        message: 'Enter valid email address!',
-      },
-    ],
-    phone: [
-      {
-        required: true,
-      },
-      {
-        pattern: regexData.phone,
-        message: 'Enter valid phone number!',
-      },
-    ],
-    address: [{ min: 3, max: 30 }, { required: true }],
-  },
-  day: {
-    title: [{ min: 10, max: 100 }, { required: true }],
-    location: [{ min: 3, max: 30 }, { required: true }],
-    dateTime: [
-      { required: true },
-      { required: true },
-      ({ getFieldValue }) => ({
-        validator(_, value) {
-          if (!value || value > Date.now()) {
-            return Promise.resolve();
-          }
-          return Promise.reject(new Error('The  Date time cannot be past date'));
-        },
-      }),
-    ],
-    description: [{ min: 20, max: 300 }, { required: true }],
-  },
-  loveStory: {
-    title: [{ min: 10, max: 100 }, { required: true }],
-    dateTime: [{ required: true }],
-    description: [{ min: 20, max: 300 }, { required: true }],
-  },
-};
-
-export const proFormCategoryFieldValidation = {
-  name: [{ min: 3, max: 20 }, { required: true }],
-  alias: [{ min: 3, max: 20 }, { required: true }],
-  description: [{ min: 20, max: 300 }, { required: true }],
-  subCategories: [{ required: true }],
-};
-export const proFormSubCategoryFieldValidation = {
-  name: [{ min: 3, max: 20 }, { required: true }],
-  alias: [{ min: 3, max: 20 }, { required: true }],
-  description: [{ min: 20, max: 300 }, { required: true }],
-};
-export const proFormAmenityFieldValidation = {
-  name: [{ min: 3, max: 20 }, { required: true }],
-  alias: [{ min: 3, max: 20 }, { required: true }],
-  description: [{ min: 20, max: 300 }, { required: true }],
-};
-export const proFormHighlightFieldValidation = {
-  name: [{ min: 3, max: 20 }, { required: true }],
-  alias: [{ min: 3, max: 20 }, { required: true }],
-  description: [{ min: 20, max: 300 }, { required: true }],
-
-  relatedCategories: [
-    {
-      required: true,
-    },
-  ],
-  relatedSubCategories: [
-    {
-      required: true,
-    },
-  ],
-};
-export const proFormFaqFieldValidation = {
-  question: [{ min: 5, max: 200 }, { required: true }],
-  answer: [{ min: 10, max: 500 }, { required: true }],
-};
-
-export const proFormGeneralValidation = {
-  required: {
-    required: true,
-  },
-};
-
-export const proFormTravelDetailFieldValidation = {
-  airline: [{ min: 10, max: 30 }, { required: true }],
-  flightNumber: [{ min: 3, max: 30 }, { required: true }],
-  arrivalDateTime: [{ required: true }],
-  departureDateTime: [{ required: true }],
-  arrivalPlace: [{ min: 3, max: 30 }, { required: true }],
-  departurePlace: [{ min: 3, max: 30 }, { required: true }],
-  email: [
-    {
-      required: true,
-    },
-    { pattern: regexData.email, message: 'Please Enter valid email' },
-  ],
-};
-export const proFormRoomFieldValidation = {
-  hotel: [{ min: 3, max: 30 }, { required: true }],
-  roomNo: [{ min: 1, max: 30 }, { required: true }],
-  checkInDate: [{ required: true }],
-  checkOutDate: [{ required: true }],
-};
 export const getAvatar = (name) => {
   return `https://ui-avatars.com/api/?length=1&rounded=true&background=random&name=${name}`;
 };

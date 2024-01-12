@@ -24,7 +24,7 @@ const EntryForm = (props) => {
     } else {
       message.success(result.message || 'Updated successfully!!');
       form.resetFields();
-      history.push('/student/list');
+      history.goBack();
     }
   };
   return (

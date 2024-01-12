@@ -104,6 +104,7 @@ const TableList = ({ shiftId, classId }) => {
       title: ' Name',
       tip: 'name',
       dataIndex: 'name',
+      copyable: true,
       render: (dom, entity) => {
         return (
           <a
@@ -120,12 +121,30 @@ const TableList = ({ shiftId, classId }) => {
     {
       title: 'Email',
       dataIndex: 'email',
+      tip: 'Click to send email',
+      copyable: true,
+
+      render: (dom, entity) => {
+        return (
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={`mailto:${entity.email}`}
+          >{`${entity.email}`}</a>
+        );
+      },
     },
     {
       title: 'Mobile',
       dataIndex: 'mobile',
+      copyable: true,
       render: (_, record) => {
-        return JSON.parse(record?.mobile)?.formattedValue;
+        const mobile = record.mobile ? JSON.parse(record?.mobile)?.formattedValue : '-';
+        if (mobile) {
+          return <a target="_blank" rel="noreferrer" href={`tel:${mobile}`}>{`${mobile}`}</a>;
+        } else {
+          null;
+        }
       },
     },
     {

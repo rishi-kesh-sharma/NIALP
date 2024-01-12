@@ -1,7 +1,7 @@
 import CustomPhoneInput from '@/components/CustomPhoneInput';
 import CustomUpload from '@/components/CustomUpload';
 import getFormProps from '@/data/getFormProps';
-import { proFormAddressInfoFieldValidation, proFormPersonaInfoFieldValidation } from '@/data/util';
+import { proFormCareerInfoFieldValidation } from '@/data/util';
 import { ProCard } from '@ant-design/pro-components';
 import ProForm, {
   ProFormCheckbox,
@@ -39,7 +39,7 @@ const employmentStatusOptions = [
   },
 ];
 
-const Career = (props) => {
+const Career = ({ currentSize }) => {
   return (
     // <ProCard
     //   bordered
@@ -52,55 +52,57 @@ const Career = (props) => {
     // >
     <>
       <ProFormText
-        width="xl"
+        width={currentSize}
         label="ENTITY EMPLOYER"
         name="entityEmployer"
-        // rules={proFormAddressInfoFieldValidation.functionality}
+        rules={proFormCareerInfoFieldValidation.entityEmployer}
         placeholder="Please enter entity employer"
       />
       <ProFormDigit
-        width="xl"
+        width={currentSize}
         label="NO OF EMPLOYEES"
         name="noOfEmployees"
-        // rules={proFormAddressInfoFieldValidation.functionality}
+        rules={proFormCareerInfoFieldValidation.noOfEmployees}
         placeholder="Please enter number of employees"
       />
 
       <ProFormText
-        width="xl"
+        width={currentSize}
         label="PROFESSION LOCALITY"
         name="professionLocality"
-        // rules={proFormAddressInfoFieldValidation.employmentLocality}
+        rules={proFormCareerInfoFieldValidation.professionLocality}
         placeholder="Please enter employment locality"
       />
       <ProFormText
-        width="xl"
+        width={currentSize}
         label="FUNCTIONALITY"
         name="functionality"
-        // rules={proFormAddressInfoFieldValidation.functionality}
+        rules={proFormCareerInfoFieldValidation.functionality}
         placeholder="Please enter functionality"
       />
       <ProFormText
-        width="xl"
+        width={currentSize}
         label="EDUCATION LEVEL"
         name="educationLevel"
-        // rules={proFormAddressInfoFieldValidation.educationLevel}
+        rules={proFormCareerInfoFieldValidation.educationLevel}
         placeholder="Please enter education level"
       />
 
-      <ProFormRadio.Group
-        layout="horizontal"
-        width={'xl'}
-        name="employmentStatus"
-        label="EMPLOYMENT STATUS"
-        options={employmentStatusOptions}
-      />
       <ProFormTextArea
-        width="xl"
+        fieldProps={{ rows: 1 }}
+        width={currentSize}
         label="Other Qualifications(if any)"
         name="otherQualification"
-        // rules={proFormAddressInfoFieldValidation.educationLevel}
+        rules={proFormCareerInfoFieldValidation.otherQualification}
         placeholder="Please enter other qualifications (if any)"
+      />
+      <ProFormRadio.Group
+        layout={currentSize == 'sm' ? 'vertical' : 'horizontal'}
+        width={currentSize}
+        name="employmentStatus"
+        label="EMPLOYMENT STATUS"
+        rules={proFormCareerInfoFieldValidation.employmentStatus}
+        options={employmentStatusOptions}
       />
     </>
     // </ProCard>

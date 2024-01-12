@@ -68,7 +68,7 @@ const PersonalInfo = ({ setTab, resource, updateStudent, personalInfo }) => {
           rules={proFormPersonaInfoFieldValidation.mobile}
           placeholder="Please enter mobile"
         /> */}
-        <ProForm.Item
+        {/* <ProForm.Item
           name={'mobile'}
           width="lg"
           label="Phone"
@@ -77,7 +77,7 @@ const PersonalInfo = ({ setTab, resource, updateStudent, personalInfo }) => {
           rules={proFormPersonaInfoFieldValidation.mobile}
         >
           <CustomPhoneInput setMobileString={setMobileString} />
-        </ProForm.Item>
+        </ProForm.Item> */}
         {/* <CustomPhoneInput /> */}
         <ProFormText
           width="lg"
@@ -89,11 +89,10 @@ const PersonalInfo = ({ setTab, resource, updateStudent, personalInfo }) => {
 
         <ProFormRadio.Group name="sex" label="Gender" options={genderOptions} />
         <ProFormDatePicker
-          validateFirst
           width={'lg'}
           name="dob"
           label="Date of Birth"
-          rules={proFormPersonaInfoFieldValidation.dob}
+          rules={proFormPersonaInfoFieldValidation.updateDob}
         />
         <ProFormText
           width="lg"
@@ -102,14 +101,14 @@ const PersonalInfo = ({ setTab, resource, updateStudent, personalInfo }) => {
           // rules={proFormPersonaInfoFieldValidation.telePhone}
           placeholder="Please enter telephone number"
         />
-        <ProForm.Item name="image" style={{ marginLeft: '' }} label="Document Image">
+        {/* <ProForm.Item name="image" style={{ marginLeft: '' }} label="Document Image">
           <CustomUpload
             multiple={true}
             fileList={fileList}
             setFileList={setFileList}
             maxFileLength={5}
           />
-        </ProForm.Item>
+        </ProForm.Item> */}
       </ProForm>
     </div>
   );
