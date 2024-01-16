@@ -30,7 +30,6 @@ const EntryForm = (props) => {
       }
     }
   };
-
   return (
     <PageContainer pageHeaderRender={false}>
       <Tabs currentId={currentId} addCourse={addCourse} />

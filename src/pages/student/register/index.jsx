@@ -119,7 +119,6 @@ const StepForm = () => {
     }
   };
 
-  console.log(formRef, 'formREf');
   const handleDone = () => {
     console.log(formRef, 'form ref');
     personalFormRef.current?.resetFields();

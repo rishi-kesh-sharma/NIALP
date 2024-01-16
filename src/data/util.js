@@ -133,17 +133,48 @@ export const proFormCivilInfoFieldValidation = {
 };
 export const proFormPaymentInfoFieldValidation = {
   paymentStatus: [{ min: 3, max: 30 }, { required: true }],
-  payableFee: [{ required: true }],
+  payableFee: [
+    { required: true },
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        // if (parseInt(value) == 0) {
+        //   return Promise.resolve();
+        // }
+        // if (!value) {
+        //   return Promise.reject(new Error('Paid fee is required '));
+        // }
+        if (isNaN(value)) {
+          return Promise.reject(new Error('Paid fee must be number '));
+        }
+        if (value < 0) {
+          return Promise.reject(new Error('Payable must be greater than 0 '));
+        }
+        return Promise.resolve();
+      },
+    }),
+  ],
+
   paidFee: [
     { required: true },
     ({ getFieldValue }) => ({
       validator(_, value) {
-        if (value && parseInt(value) <= parseInt(getFieldValue('payableFee'))) {
-          console.log(value, 'paid fee');
-          console.log(getFieldValue('payableFee'), 'payableFee');
-          return Promise.resolve();
+        console.log(value);
+        // if (parseInt(value) == 0) {
+        //   return Promise.resolve();
+        // }
+        // if (!value) {
+        //   return Promise.reject(new Error('Paid fee is required '));
+        // }
+        if (isNaN(value)) {
+          return Promise.reject(new Error('Paid fee must be number '));
         }
-        return Promise.reject(new Error('Paid fee cannot be greater than total payable fee '));
+        if (parseInt(value) < 0) {
+          return Promise.reject(new Error('Paid fee must be greater than 0 '));
+        }
+        if (parseInt(value) > parseInt(getFieldValue('payableFee'))) {
+          return Promise.reject(new Error('Paid fee cannot be greater than total payable fee '));
+        }
+        return Promise.resolve();
       },
     }),
   ],

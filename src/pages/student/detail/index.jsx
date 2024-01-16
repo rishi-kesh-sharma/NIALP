@@ -34,6 +34,7 @@ import { queryAdvancedProfile } from '@/pages/profile/advanced/service';
 import { getById, remove } from '../service';
 import { getAvatar } from '@/data/util';
 import { getUrlExtension } from '@/utils';
+import PageLoading from '@/pages/dashboard/analysis/components/PageLoading';
 
 const { Step } = Steps;
 const ButtonGroup = Button.Group;
@@ -194,6 +195,10 @@ const StudentDetail = (props) => {
     paidFee: data?.paidFee,
   };
 
+  console.log(data, 'data');
+  if (!data || loading) {
+    return <PageLoading />;
+  }
   return (
     <PageContainer
       // title={personalInfo.name}

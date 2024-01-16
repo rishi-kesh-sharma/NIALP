@@ -27,7 +27,7 @@ export async function getInitialState() {
       initialize,
       currentUser: auth?.userInfo,
       settings: {
-        title: 'NIALP',
+        title: '',
         now: new Date().toLocaleString(),
       },
     };

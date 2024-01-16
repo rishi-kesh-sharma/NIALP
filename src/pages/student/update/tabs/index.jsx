@@ -13,7 +13,7 @@ export default function Tabs({ resource, setResource, updateStudent }) {
   const [tabPosition, setTabPosition] = useState('top');
 
   const personalInfo = {
-    image: resource?.image,
+    residentCardCopy: resource?.residentCardCopy,
     name: resource?.name,
     mobile: resource?.mobile,
     email: resource?.email,
@@ -47,9 +47,16 @@ export default function Tabs({ resource, setResource, updateStudent }) {
 
   const paymentInfo = {
     paymentStatus: (() => {
-      const paymentStatuses = { fullyPaid: 'Paid', partiallyPaid: 'Partially Paid' };
+      const paymentStatuses = {
+        fullyPaid: 'Paid',
+        partiallyPaid: 'Partially Paid',
+        unpaid: 'unpaid',
+      };
       const payableFee = resource?.payableFee;
       const paidFee = resource?.paidFee;
+      if (paidFee <= 0) {
+        return paymentStatuses.unpaid;
+      }
 
       if (payableFee && paidFee) {
         if (payableFee < paidFee) {
@@ -62,6 +69,7 @@ export default function Tabs({ resource, setResource, updateStudent }) {
     })(),
     payableFee: resource?.payableFee,
     paidFee: resource?.paidFee,
+    paymentProof: resource?.paymentProof,
   };
 
   return (

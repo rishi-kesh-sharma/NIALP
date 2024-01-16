@@ -137,7 +137,7 @@ const Personal = ({
       {/* address */}
 
       <ProForm.Item
-        style={{ marginLeft: '0rem !important' }}
+        style={{ marginLeft: '0rem !important', width: '29.16%' }}
         name={'mobile'}
         // width={currentSize}
         label="MOBILE NUMBER"
@@ -146,7 +146,7 @@ const Personal = ({
       >
         <CustomPhoneInput setMobileString={setMobileString} />
       </ProForm.Item>
-      <ProForm.Group>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }} direction="horizontal">
         <ProForm.Item
           className="my-upload"
           name="image"
@@ -174,7 +174,7 @@ const Personal = ({
             maxFileLength={5}
           />
         </ProForm.Item>
-      </ProForm.Group>
+      </div>
     </>
     // </ProCard>
   );
