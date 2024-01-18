@@ -90,8 +90,8 @@ const Login = () => {
           <ProForm
             initialValues={{
               autoLogin: true,
-              email: 'admin@gmail.com',
-              password: 'Nepal@123',
+              email: '',
+              password: '',
             }}
             submitter={{
               searchConfig: {
@@ -133,7 +133,7 @@ const Login = () => {
                   }}
                   placeholder={intl.formatMessage({
                     id: 'pages.login.email.placeholder',
-                    defaultMessage: 'email: admin ',
+                    defaultMessage: 'email',
                   })}
                   rules={[
                     {
