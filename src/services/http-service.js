@@ -11,10 +11,7 @@ request.interceptors.request.use((url, options) => {
       options.headers['Authorization'] = null;
     }
   }
-
-  console.log('url', API_URL, url);
   options.headers['rbac-client-time'] = `${new Date()} `;
-
   return {
     url: `${API_URL}${url}`,
     options: { ...options, interceptors: true },
@@ -22,7 +19,7 @@ request.interceptors.request.use((url, options) => {
 });
 
 request.interceptors.response.use(async (response, options) => {
-  // if resposne is 401, return initialize with null
+  // if response is 401, return initialize with null
   if (response.status === 401) {
     localStorage.removeItem('auth');
     history.replace({

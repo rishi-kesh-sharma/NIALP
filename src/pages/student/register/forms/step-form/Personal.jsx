@@ -137,7 +137,7 @@ const Personal = ({
       {/* address */}
 
       <ProForm.Item
-        style={{ marginLeft: '0rem !important', width: '29.16%' }}
+        style={{ marginLeft: '0rem !important', width: '29.16% !important' }}
         name={'mobile'}
         // width={currentSize}
         label="MOBILE NUMBER"

@@ -31,6 +31,13 @@ export default defineConfig({
   // umi routes: https://umijs.org/docs/routing
   routes: [
     {
+      path: '/table-list',
+      layout: true,
+      name: 'table-list',
+      component: './list/table-list',
+      hideInMenu: true,
+    },
+    {
       path: '/login',
       layout: false,
       name: 'login',
@@ -183,101 +190,6 @@ export default defineConfig({
       access: 'canAdmin',
     },
 
-    // //Agency
-
-    // {
-    //   path: '/agency/new',
-    //   component: './agency/entry',
-    //   access: 'canAdmin',
-    // },
-    // {
-    //   path: '/agency/edit/:id',
-    //   component: './agency/update',
-    //   access: 'canAdmin',
-    // },
-    // {
-    //   path: '/agency/list',
-    //   icon: 'reconciliation',
-    //   name: 'Agency',
-    //   component: './agency/list',
-    //   access: 'canAdmin',
-    // },
-    // //FAQ
-
-    // {
-    //   path: '/faq/new',
-    //   component: './faq/entry',
-    //   access: 'canAdmin',
-    // },
-    // {
-    //   path: '/faq/edit/:id',
-    //   component: './faq/update',
-    //   access: 'canAdmin',
-    // },
-    // {
-    //   path: '/faq/list',
-    //   icon: 'reconciliation',
-    //   name: 'FAQ',
-    //   component: './faq/list',
-    //   access: 'canAdmin',
-    // },
-    // // Contact
-
-    // {
-    //   path: '/contact/new',
-    //   component: './contact/entry',
-    //   access: 'canAdmin',
-    // },
-    // {
-    //   path: '/contact/edit/:id',
-    //   component: './contact/update',
-    //   access: 'canAdmin',
-    // },
-    // {
-    //   path: '/contact/list',
-    //   icon: 'reconciliation',
-    //   name: 'contact',
-    //   component: './contact/list',
-    //   access: 'canAdmin',
-    // },
-    // {
-    //   name: 'Guests',
-    //   icon: 'reconciliation',
-    //   path: '/event/guest/:eventId',
-    //   component: './guest/list',
-
-    //   hideInMenu: false,
-    //   exact: true,
-    //   access: 'canAgency',
-    // },
-
-    // blogs
-    // {
-    //   path: '/blogs/new',
-    //   component: './blogs/entry',
-    // },
-    // {
-    //   path: '/blogs/edit/:id',
-    //   component: './blogs/update',
-    // },
-    // {
-    //   path: '/blogs/list',
-    //   icon: 'reconciliation',
-    //   name: 'Blog',
-    //   hideInMenu: true,
-    //   component: './blogs/list',
-    // },
-    // {
-    //   path: '/contact/list',
-    //   icon: 'phone',
-    //   name: 'Contacts',
-    //   component: './contact/list',
-
-    // },
-    // {
-    //   path: '/contact/edit/:id',
-    //   component: './contact/update',
-    // },
     {
       name: 'account',
       icon: 'user',
@@ -335,9 +247,6 @@ export default defineConfig({
     {
       component: '404',
     },
-    // {
-    //   component: './class/list',
-    // },
   ],
   theme: {
     'primary-color': defaultSettings.primaryColor,
